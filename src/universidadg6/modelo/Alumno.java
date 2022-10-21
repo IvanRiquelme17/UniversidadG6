@@ -83,6 +83,4 @@ public class Alumno {
     public String toString() {
         return "Alumno{" + "id_alumno=" + id_alumno + ", dni=" + dni + ", apellido=" + apellido + ", nombre=" + nombre + ", fechaNacimiento=" + fechaNacimiento + ", activo=" + activo + '}';
     }
-    
-    
 }

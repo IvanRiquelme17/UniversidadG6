@@ -1,23 +1,23 @@
-
 package universidadg6.modelo;
 
 public class Nota {
+
     private int id_inscripcion;
     private Alumno alumno;
-    private Materia materia;
+    private Materias materia;
     private double notaAlumno;
 
     public Nota() {
     }
 
-    public Nota(int id_inscripcion, Alumno alumno, Materia materia, double notaAlumno) {
+    public Nota(int id_inscripcion, Alumno alumno, Materias materia, double notaAlumno) {
         this.id_inscripcion = id_inscripcion;
         this.alumno = alumno;
         this.materia = materia;
         this.notaAlumno = notaAlumno;
     }
 
-    public Nota(Alumno alumno, Materia materia, double notaAlumno) {
+    public Nota(Alumno alumno, Materias materia, double notaAlumno) {
         this.alumno = alumno;
         this.materia = materia;
         this.notaAlumno = notaAlumno;
@@ -39,11 +39,11 @@ public class Nota {
         this.alumno = alumno;
     }
 
-    public Materia getMateria() {
+    public Materias getMateria() {
         return materia;
     }
 
-    public void setMateria(Materia materia) {
+    public void setMateria(Materias materia) {
         this.materia = materia;
     }
 
@@ -55,10 +55,9 @@ public class Nota {
         this.notaAlumno = notaAlumno;
     }
 
+    
     @Override
     public String toString() {
         return "Nota{" + "id_inscripcion=" + id_inscripcion + ", alumno=" + alumno + ", materia=" + materia + ", notaAlumno=" + notaAlumno + '}';
     }
-    
-   
 }

@@ -1,23 +1,23 @@
 
 package universidadg6.modelo;
 
-public class Materia {
+public class Materias {
     private int id_materia;
     private String nombre;
     private int anio;
     private boolean activo;
 
-    public Materia() {
+    public Materias() {
     }
 
-    public Materia(int id_materia, String nombre, int anio, boolean activo) {
+    public Materias(int id_materia, String nombre, int anio, boolean activo) {
         this.id_materia = id_materia;
         this.nombre = nombre;
         this.anio = anio;
         this.activo = activo;
     }
 
-    public Materia(String nombre, int anio, boolean activo) {
+    public Materias(String nombre, int anio, boolean activo) {
         this.nombre = nombre;
         this.anio = anio;
         this.activo = activo;
@@ -54,7 +54,5 @@ public class Materia {
     public void setActivo(boolean activo) {
         this.activo = activo;
     }
-    
-    
-    
+      
 }
