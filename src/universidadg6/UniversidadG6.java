@@ -13,7 +13,9 @@ public class UniversidadG6 {
         Connection con=Conexion.getConexion();
         Alumno martin = new Alumno(43490178, "Rastrilla", "Martin", LocalDate.now(), true);
         Alumno mariano = new Alumno(43001999, "Gutierrez", "Mariano", LocalDate.now(), true);
+        Alumno mariano2 = new Alumno(43001999, "Gutierres", "Mariano", LocalDate.now(), true);
         AlumnoData aData = new AlumnoData(con);
-        aData.guardarAlumno(mariano);
+        aData.actualizarAlumno(mariano2);
+        
     }
 }
