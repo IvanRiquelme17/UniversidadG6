@@ -81,7 +81,7 @@ public class Alumno {
 
     @Override
     public String toString() {
-        return "Alumno{" + "id_alumno=" + id_alumno + ", dni=" + dni + ", apellido=" + apellido + ", nombre=" + nombre + ", fechaNacimiento=" + fechaNacimiento + ", activo=" + activo + '}';
+        return "Alumno = " + " |Legajo: " + id_alumno + " | DNI = " + dni + " | Apellido = " + apellido + "| Nombre = " + nombre + " | Fecha De Nacimiento = " + fechaNacimiento + " | Activa = " + activo;
     }
     
     
