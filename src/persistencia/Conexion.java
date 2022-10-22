@@ -4,18 +4,18 @@
  * and open the template in the editor.
  */
 package persistencia;
+
 import java.sql.DriverManager;
 import java.sql.SQLException;
 import java.sql.Connection;
-import java.util.logging.Level;
-import java.util.logging.Logger;
+import javax.swing.JOptionPane;
 
 public class Conexion {
 
-    private String url;
-    private String usuario;
-    private String password;
-    private Connection conexion=null;
+    private static String url = "jdbc:mysql://localhost/universidad";
+    private static String usuario = "root";
+    private static String password = "";
+    private static Conexion conexion = null;
 
     public Conexion(String url, String usuario, String password) {
         this.url = url;
@@ -23,15 +23,26 @@ public class Conexion {
         this.password = password;
     }
 
-    public Connection getConexion() {
-        if (conexion == null) { // Si el obj conexion es nulo, se va a crear el obj de conexion 
-            try {
-                Class.forName("org.mariadb.jdbc.Driver");
-                conexion = DriverManager.getConnection(url,usuario,password);
-            } catch (SQLException | ClassNotFoundException ex) {
-                Logger.getLogger(Conexion.class.getName()).log(Level.SEVERE, null, ex);
-            }
+    private Conexion() {
+        try {
+            Class.forName("org.mariadb.jdbc.Driver");
+
+        } catch (ClassNotFoundException ex) {
+            JOptionPane.showMessageDialog(null, "Clase Conexion: Error al cargar Driver");
         }
-        return conexion;
     }
+
+    public static Connection getConexion() {
+        Connection conn = null;
+        if (conexion == null) {
+            conexion = new Conexion();
+        }
+        try {
+            conn = DriverManager.getConnection(url + "?useLegacyDatetimeCode=false&serverTimezone=UTC" + "&user=" + usuario + "&password=" + password);
+        } catch (SQLException ex) {
+            JOptionPane.showMessageDialog(null, "Clase Conexion: Error de Conexion");
+        }
+        return conn;
+    }
+
 }

@@ -23,34 +23,36 @@ import universidadg6.modelo.Alumno;
  */
 public class AlumnoData {
 
-    private Connection con = null;
+    private Connection con;
 
-    public AlumnoData(Conexion conexion) {
-        this.con = conexion.getConexion();
+    public AlumnoData(Connection con) {
+        this.con = con;
     }
 
     public void guardarAlumno(Alumno a) {        // ESTO ES UN INSERT 
-        String query = "INSERT INTO alumno(nombre,apellido,fechaNacimiento,activo) VALUES (?,?,?,?)";                       // ARMO LA QUERY
+        String query = "INSERT INTO alumno(dni,nombre,apellido,fechaNacimiento,activo) VALUES (?,?,?,?,?)";                       // ARMO LA QUERY
         try {
             PreparedStatement ps = con.prepareStatement(query, Statement.RETURN_GENERATED_KEYS); // PREPARO EL STATEMENT
-            ps.setString(1, a.getNombre());
-            ps.setString(2, a.getApellido());
-            ps.setDate(3, Date.valueOf(a.getFechaNacimiento()));
-            ps.setBoolean(4, a.isActivo());
+            ps.setLong(1, a.getDni());
+            ps.setString(2, a.getNombre());
+            ps.setString(3, a.getApellido());
+            ps.setDate(4, Date.valueOf(a.getFechaNacimiento()));
+            ps.setBoolean(5, a.isActivo());
             ps.executeUpdate(); // EJECUTO
 
             ResultSet rs = ps.getGeneratedKeys();
             if (rs.next()) {
                 a.setId_alumno(rs.getInt(1));
+                JOptionPane.showMessageDialog(null, "Alumno agregado: "+a.getNombre());
             } else {
                 JOptionPane.showMessageDialog(null, "No se pudo tener ID");
             }
-            ps.close(); // CERAR LA CONEXION 
+            ps.close(); // CERRAR LA CONEXION 
         } catch (SQLException ex) {
-            Logger.getLogger(AlumnoData.class.getName()).log(Level.SEVERE, null, ex);
+            JOptionPane.showMessageDialog(null, "Sentencia SQL errónea-AgregarAlumno");
         }
     }
-    
+
     public Alumno buscarAlumno(int id) {    // ESTO ES UN SELECT DE UN ALUMNO
         Alumno a = null; // DEFINIR UN OBJETO 
         String sql = "SELECT * FROM alumno WHERE id_alumno=?"; // 1.ARMO LA QUERY
@@ -76,7 +78,7 @@ public class AlumnoData {
 
     public ArrayList<Alumno> listaAlumnos() {
         ArrayList<Alumno> listaAlum = new ArrayList();
-        String sql = "SELECT * FROM alumno WHERE estado=1";
+        String sql = "SELECT * FROM alumno WHERE activo=1";
         try {
             PreparedStatement ps = con.prepareStatement(sql);
             ResultSet rs = ps.executeQuery();
@@ -127,11 +129,11 @@ public class AlumnoData {
             ps.setInt(5, a.getId_alumno());
             if (ps.executeUpdate() > 0) {
                 JOptionPane.showMessageDialog(null, "Los  datos del alumno se han actualizado");
+            } else {
+                JOptionPane.showMessageDialog(null, "Los  datos del alumno no se han actualizado");
             }
-
         } catch (SQLException ex) {
             JOptionPane.showMessageDialog(null, "No se ha  podido actualizar al alumno");
-            Logger.getLogger(AlumnoData.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
 
