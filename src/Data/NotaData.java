@@ -13,10 +13,22 @@ import universidadg6.modelo.Nota;
 public class NotaData {
 
     private Connection con;
+    private AlumnoData aData;
+    private MateriaData mData;
 
     public NotaData(Connection con) {
         this.con = con;
     }
+
+    
+    
+    public NotaData(Connection con, AlumnoData aData, MateriaData mData) {
+        this.con = con;
+        this.aData = aData;
+        this.mData = mData;
+    }
+
+    
 
     private Alumno regenerarAlumno(int id) {
         //Permite reestructurar un objeto Alumno desde un id
