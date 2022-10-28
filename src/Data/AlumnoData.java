@@ -42,7 +42,6 @@ public class AlumnoData {
             ResultSet rs = ps.getGeneratedKeys();
             if (rs.next()) {
                 alumno.setId_alumno(rs.getInt(1));
-
             }
             ps.close();
         } catch (SQLException e) {
@@ -61,6 +60,7 @@ public class AlumnoData {
             while (rs.next()) {  // ARMO UN OBJETO
                 a = new Alumno(); // 4.INSTANCIAR EL OBJETO
                 a.setId_alumno(rs.getInt("id_alumno"));
+                a.setDni(rs.getLong("dni"));
                 a.setNombre(rs.getString("nombre"));
                 a.setApellido(rs.getString("apellido"));
                 a.setFechaNacimiento(rs.getDate("fechaNacimiento").toLocalDate());
@@ -73,7 +73,7 @@ public class AlumnoData {
         return a;
     }
 
-    public void actualizarAlumno(Alumno a) {
+    public void actualizarAlumno(Alumno a, int id) {
         String query = "UPDATE alumno SET dni=?,apellido=?,nombre=?,fechaNacimiento=? WHERE id_alumno=?";
 
         try {
@@ -82,6 +82,7 @@ public class AlumnoData {
             ps.setString(2, a.getApellido());
             ps.setString(3, a.getNombre());
             ps.setDate(4, java.sql.Date.valueOf(a.getFechaNacimiento()));
+            ps.setInt(5, id);
 
             if (ps.executeUpdate() > 0) {
                 JOptionPane.showMessageDialog(null, "Alumno actualizado con éxito");
@@ -92,28 +93,28 @@ public class AlumnoData {
         } catch (Exception e) {
             JOptionPane.showMessageDialog(null, "Sentencia SQL errónea-ActualizarAlumno ");
         }
-
     }
 
     public ArrayList<Alumno> obtenerAlumnos() {
         ArrayList<Alumno> listaAlumnos = new ArrayList();
-        String query = "SELECT * FROM alumno WHERE id_alumno=1";
+        String query = "SELECT * FROM alumno WHERE activo=1";
 
         try {
             PreparedStatement ps = con.prepareStatement(query);
             ResultSet rs = ps.executeQuery();
             while (rs.next()) {
-                Alumno a =new Alumno();
+                Alumno a = new Alumno();
                 a.setId_alumno(rs.getInt("id_alumno"));
+                a.setDni(rs.getLong("dni"));
                 a.setNombre(rs.getString("nombre"));
                 a.setApellido(rs.getString("apellido"));
                 a.setFechaNacimiento(rs.getDate("fechaNacimiento").toLocalDate());
                 a.setActivo(rs.getBoolean("activo"));
-                
+
                 listaAlumnos.add(a);
             }
             ps.close();
-        } catch (Exception e) {
+        } catch (SQLException e) {
             JOptionPane.showMessageDialog(null, "No se pudieron obtener a los alumnos");
         }
         return listaAlumnos;
