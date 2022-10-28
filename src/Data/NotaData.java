@@ -5,6 +5,9 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 import universidadg6.modelo.Alumno;
 import universidadg6.modelo.Materia;
@@ -16,16 +19,12 @@ public class NotaData {
     private AlumnoData aData;
     private MateriaData mData;
 
-    public NotaData(Connection con) {
-        this.con = con;
-    }
-
     
     
-    public NotaData(Connection con, AlumnoData aData, MateriaData mData) {
-        this.con = con;
-        this.aData = aData;
-        this.mData = mData;
+    public NotaData() {
+        this.con = Conexion.getConexion();
+        this.aData = new AlumnoData(con);
+        this.mData = new MateriaData(con);
     }
 
     
@@ -59,26 +58,28 @@ public class NotaData {
             ResultSet rs = ps.getGeneratedKeys();
             if (rs.next()) {
                 i.setId_inscripcion(rs.getInt(1));
+                
             }
             ps.close();
         } catch (SQLException e) {
-            JOptionPane.showMessageDialog(null, "Sentencia SQL errónea-AgregarInscripcion");
+            JOptionPane.showMessageDialog(null, "Sentencia SQL errónea-AgregarInscripcion | "+e.getMessage());
         }
     }
 
     public Nota obtenerInscripcion(int idAlumno, int idMateria) {
         Nota i = null;
-        NotaData aux = null;
         String query = "SELECT * FROM nota WHERE id_alumno=? AND id_materia=?";
         try {
             PreparedStatement ps = con.prepareStatement(query);
             ps.setInt(1, idAlumno);
+            ps.setInt(2, idMateria);
             ResultSet rs = ps.executeQuery();
-            while (rs.next()) {
+            if (rs.next()) {
                 i = new Nota();
-                aux = new NotaData(con);
-                i.setAlumno(aux.regenerarAlumno(idAlumno));
-                i.getAlumno();
+                i.setId_inscripcion(rs.getInt("id_inscripcion"));
+                i.setNotaAlumno(rs.getDouble("notaAlumno"));
+                i.setAlumno(aData.buscarAlumno(rs.getInt("id_alumno")));
+                i.setMateria(mData.buscarMateria(rs.getInt("id_materia")));
             }
             ps.close();
         } catch (SQLException e) {
@@ -86,6 +87,62 @@ public class NotaData {
         }
         return i;
     }
-
+    
+    public void borrarInscripcion(int idAlumno, int idMateria){
+        String query = "DELETE FROM nota WHERE id_alumno=? AND id_materia=?";
+        try{
+            PreparedStatement ps = con.prepareStatement(query);
+            ps.setInt(1, idAlumno);
+            ps.setInt(2, idMateria);
+            if (ps.executeUpdate() > 0) {
+                JOptionPane.showMessageDialog(null, "Inscripción Eliminada");
+            }else{
+                JOptionPane.showMessageDialog(null, "No se pudo eliminar la Inscripción");
+            }
+            ps.close();
+        }catch(SQLException e){
+            JOptionPane.showMessageDialog(null, "Sentencia SQL errónea-BorrarInscripcion");
+        }
+    }
+    
+    public void actualizarNota(int idAlumno, int idMateria, double nota){
+        String query = "UPDATE nota SET notaAlumno=? WHERE id_alumno=? AND id_materia=?";
+        try {
+            PreparedStatement ps = con.prepareStatement(query);
+            ps.setDouble(1, nota);
+            ps.setInt(2, idAlumno);
+            ps.setInt(3, idMateria);
+            if(ps.executeUpdate()>0) {
+                JOptionPane.showMessageDialog(null, "Nota actualizada con éxito");
+            } else {
+                JOptionPane.showMessageDialog(null, "No se ha podido actualizar la nota");
+            }
+            ps.close();
+        } catch (SQLException ex) {
+            JOptionPane.showMessageDialog(null, "Sentencia SQL errónea-ActualizarInscripcion");
+        }
+    }
+    
+    public ArrayList<Materia> obtenerMateriasInscriptas(int idAlumno){
+        String query = "SELECT m.id_materia, nombre, anio, activo FROM materias AS m, nota AS n WHERE n.id_materia = m.id_materia AND id_alumno = ?; ";
+        ArrayList<Materia> listaMateriasInscriptas = new ArrayList();
+        try {
+            PreparedStatement ps = con.prepareStatement(query);
+            ps.setInt(1, idAlumno);
+            ResultSet rs = ps.executeQuery();
+            while (rs.next()) {
+                Materia m = new Materia();
+                m.setId_materia(rs.getInt("id_materia"));
+                m.setNombre(rs.getString("nombre"));
+                m.setAnio(rs.getInt("anio"));
+                m.setActivo(rs.getBoolean("activo"));
+                listaMateriasInscriptas.add(m);
+            }
+            ps.close();
+        } catch (SQLException ex) {
+            JOptionPane.showMessageDialog(null, "No se pudieron obtener las inscripciones del alumno");
+        }
+        return listaMateriasInscriptas;
+    }
     
 }

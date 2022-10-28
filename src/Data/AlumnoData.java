@@ -132,6 +132,7 @@ public class AlumnoData {
             } else {
                 JOptionPane.showMessageDialog(null, "No se pudo eliminar el alumno");
             }
+            ps.close();
         } catch (SQLException e) {
             JOptionPane.showMessageDialog(null, "Sentencia SQL errónea-BorrarAlumno");
         }

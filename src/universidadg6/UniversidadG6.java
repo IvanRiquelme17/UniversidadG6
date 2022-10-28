@@ -18,7 +18,7 @@ public class UniversidadG6 {
         Connection con=Conexion.getConexion();
         MateriaData mData = new MateriaData(con);
         AlumnoData aData = new AlumnoData(con);
-        NotaData iData = new NotaData(con);
+        NotaData iData = new NotaData();
         
         //PRUEBA CLASE ALUMNO DATA
         Alumno x = new Alumno(43333987, "Lopez", "Igor", LocalDate.now(), true);
@@ -32,7 +32,7 @@ public class UniversidadG6 {
 //        aData.borrarAlumno(2);
 
         //PRUEBA CLASE MATERIA DATA
-//        Materia m1 = new Materia("Inglés", 1, true);
+        Materia m1 = new Materia("Inglés", 1, true);
 //        Materia auxM = new Materia("Historia", 2, true);
 //        mData.guardarMateria(m1);
 //        System.out.println(mData.buscarMateria(2));
@@ -42,7 +42,14 @@ public class UniversidadG6 {
 //        }
 //        mData.borrarMateria(2);
 
-        //NADA :(
-        
+//        //NADA :(
+//        x=aData.buscarAlumno(17);
+//        m1=mData.buscarMateria(1);
+//        Nota notaX = new Nota(x, m1, 0);
+//        iData.actualizarNota(3, 4, 10);
+//        for (Materia aux : iData.obtenerMateriasInscriptas(2)) {
+//            System.out.println(aux.toString());
+        //}
+        System.out.println(iData.obtenerInscripcion(2, 1));
     }
 }

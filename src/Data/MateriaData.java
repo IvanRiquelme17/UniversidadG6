@@ -52,6 +52,7 @@ public class MateriaData {
             } else {
                 JOptionPane.showMessageDialog(null, "No se pudo eliminar la materia");
             }
+            ps.close();
         }catch(SQLException e){
             JOptionPane.showMessageDialog(null, "Sentencia SQL errónea-BorrarMateria");
         }
