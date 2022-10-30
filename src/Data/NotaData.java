@@ -145,4 +145,27 @@ public class NotaData {
         return listaMateriasInscriptas;
     }
     
+    public ArrayList<Alumno> obtenerAlumnosInscriptos(int idMateria){
+        String query = "SELECT a.id_alumno, dni, nombre, apellido, fechaNacimiento, activo FROM alumno AS a, nota AS n WHERE n.id_alumno = a.id_alumno AND id_materia = ?";
+        ArrayList<Alumno> listaAlumnoInscriptos = new ArrayList();
+        try {
+            PreparedStatement ps = con.prepareStatement(query);
+            ps.setInt(1, idMateria);
+            ResultSet rs = ps.executeQuery();
+            while (rs.next()) {
+                Alumno a = new Alumno();
+                a.setId_alumno(rs.getInt("id_alumno"));
+                a.setDni(rs.getInt("dni"));
+                a.setNombre(rs.getString("nombre"));
+                a.setApellido(rs.getString("apellido"));
+                a.setFechaNacimiento(rs.getDate("fechaNacimiento").toLocalDate());
+                a.setActivo(rs.getBoolean("activo"));
+                listaAlumnoInscriptos.add(a);
+            }
+            ps.close();
+        } catch (SQLException ex) {
+            JOptionPane.showMessageDialog(null, "No se pudieron obtener las inscripciones a la materia");
+        }
+        return listaAlumnoInscriptos;
+    }
 }
