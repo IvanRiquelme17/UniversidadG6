@@ -44,7 +44,7 @@ public class jfMain extends javax.swing.JFrame {
         jDesktop.setLayout(jDesktopLayout);
         jDesktopLayout.setHorizontalGroup(
             jDesktopLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 733, Short.MAX_VALUE)
+            .addGap(0, 745, Short.MAX_VALUE)
         );
         jDesktopLayout.setVerticalGroup(
             jDesktopLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -64,6 +64,11 @@ public class jfMain extends javax.swing.JFrame {
         jBFormAlumno.setFont(new java.awt.Font("Calibri", 1, 14)); // NOI18N
         jBFormAlumno.setForeground(new java.awt.Color(255, 255, 255));
         jBFormAlumno.setText("Formulario Alumnos");
+        jBFormAlumno.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jBFormAlumnoActionPerformed(evt);
+            }
+        });
 
         jBFormInscrip.setBackground(new java.awt.Color(6, 115, 70));
         jBFormInscrip.setFont(new java.awt.Font("Calibri", 1, 14)); // NOI18N
@@ -140,13 +145,12 @@ public class jfMain extends javax.swing.JFrame {
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                 .addComponent(jPanelPrincipal, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jDesktop, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addComponent(jDesktop))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jDesktop)
             .addComponent(jPanelPrincipal, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addComponent(jDesktop)
         );
 
         pack();
@@ -159,6 +163,14 @@ public class jfMain extends javax.swing.JFrame {
     private void jBSalirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBSalirActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_jBSalirActionPerformed
+
+    private void jBFormAlumnoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBFormAlumnoActionPerformed
+        jDesktop.removeAll();
+        jDesktop.repaint();
+        jifFormAlumno formAlumno = new jifFormAlumno();
+        formAlumno.setVisible(true);
+        jDesktop.add(formAlumno);
+    }//GEN-LAST:event_jBFormAlumnoActionPerformed
 
     /**
      * @param args the command line arguments
