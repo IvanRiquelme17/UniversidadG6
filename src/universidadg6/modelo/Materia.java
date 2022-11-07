@@ -8,6 +8,7 @@ public class Materia {
     private boolean activo;
 
     public Materia() {
+    
     }
 
     public Materia(int id_materia, String nombre, int anio, boolean activo) {

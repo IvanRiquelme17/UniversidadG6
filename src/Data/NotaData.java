@@ -19,15 +19,11 @@ public class NotaData {
     private AlumnoData aData;
     private MateriaData mData;
 
-    
-    
     public NotaData() {
         this.con = Conexion.getConexion();
         this.aData = new AlumnoData(con);
         this.mData = new MateriaData(con);
     }
-
-    
 
     private Alumno regenerarAlumno(int id) {
         //Permite reestructurar un objeto Alumno desde un id
@@ -40,7 +36,7 @@ public class NotaData {
         MateriaData mData = new MateriaData(con);
         return mData.buscarMateria(id);
     }
-    
+
     public void guardarInscripcion(Nota i) {
         String query = "INSERT INTO nota (id_alumno, id_materia, notaAlumno) VALUES (?, ?, ?)";
         try {
@@ -58,11 +54,11 @@ public class NotaData {
             ResultSet rs = ps.getGeneratedKeys();
             if (rs.next()) {
                 i.setId_inscripcion(rs.getInt(1));
-                
+
             }
             ps.close();
         } catch (SQLException e) {
-            JOptionPane.showMessageDialog(null, "Sentencia SQL errónea-AgregarInscripcion | "+e.getMessage());
+            JOptionPane.showMessageDialog(null, "Sentencia SQL errónea-AgregarInscripcion | " + e.getMessage());
         }
     }
 
@@ -87,32 +83,32 @@ public class NotaData {
         }
         return i;
     }
-    
-    public void borrarInscripcion(int idAlumno, int idMateria){
+
+    public void borrarInscripcion(int idAlumno, int idMateria) {
         String query = "DELETE FROM nota WHERE id_alumno=? AND id_materia=?";
-        try{
+        try {
             PreparedStatement ps = con.prepareStatement(query);
             ps.setInt(1, idAlumno);
             ps.setInt(2, idMateria);
             if (ps.executeUpdate() > 0) {
                 JOptionPane.showMessageDialog(null, "Inscripción Eliminada");
-            }else{
+            } else {
                 JOptionPane.showMessageDialog(null, "No se pudo eliminar la Inscripción");
             }
             ps.close();
-        }catch(SQLException e){
+        } catch (SQLException e) {
             JOptionPane.showMessageDialog(null, "Sentencia SQL errónea-BorrarInscripcion");
         }
     }
-    
-    public void actualizarNota(int idAlumno, int idMateria, double nota){
+
+    public void actualizarNota(int idAlumno, int idMateria, double nota) {
         String query = "UPDATE nota SET notaAlumno=? WHERE id_alumno=? AND id_materia=?";
         try {
             PreparedStatement ps = con.prepareStatement(query);
             ps.setDouble(1, nota);
             ps.setInt(2, idAlumno);
             ps.setInt(3, idMateria);
-            if(ps.executeUpdate()>0) {
+            if (ps.executeUpdate() > 0) {
                 JOptionPane.showMessageDialog(null, "Nota actualizada con éxito");
             } else {
                 JOptionPane.showMessageDialog(null, "No se ha podido actualizar la nota");
@@ -122,8 +118,8 @@ public class NotaData {
             JOptionPane.showMessageDialog(null, "Sentencia SQL errónea-ActualizarInscripcion");
         }
     }
-    
-    public ArrayList<Materia> obtenerMateriasInscriptas(int idAlumno){
+
+    public ArrayList<Materia> obtenerMateriasInscriptas(int idAlumno) {
         String query = "SELECT m.id_materia, nombre, anio, activo FROM materias AS m, nota AS n WHERE n.id_materia = m.id_materia AND id_alumno = ?; ";
         ArrayList<Materia> listaMateriasInscriptas = new ArrayList();
         try {
@@ -144,8 +140,30 @@ public class NotaData {
         }
         return listaMateriasInscriptas;
     }
-    
-    public ArrayList<Alumno> obtenerAlumnosInscriptos(int idMateria){
+
+    public ArrayList<Materia> obtenerMateriasNoInscriptas(int idAlumno) {
+        String query = "SELECT m.id_materia, nombre, anio, activo FROM materias AS m, nota AS n WHERE n.id_materia = m.id_materia AND id_alumno = ?; ";
+        ArrayList<Materia> listaMateriasNoInscriptas = new ArrayList();
+        try {
+            PreparedStatement ps = con.prepareStatement(query);
+            ps.setInt(1, idAlumno);
+            ResultSet rs = ps.executeQuery();
+            while (rs.next()) {
+                Materia m = new Materia();
+                m.setId_materia(rs.getInt("id_materia"));
+                m.setNombre(rs.getString("nombre"));
+                m.setAnio(rs.getInt("anio"));
+                m.setActivo(rs.getBoolean("activo"));
+                listaMateriasNoInscriptas.add(m);
+            }
+            ps.close();
+        } catch (SQLException ex) {
+            JOptionPane.showMessageDialog(null, "No se pudieron obtener las inscripciones del alumno");
+        }
+        return listaMateriasNoInscriptas;
+    }
+
+    public ArrayList<Alumno> obtenerAlumnosInscriptos(int idMateria) {
         String query = "SELECT a.id_alumno, dni, nombre, apellido, fechaNacimiento, activo FROM alumno AS a, nota AS n WHERE n.id_alumno = a.id_alumno AND id_materia = ?";
         ArrayList<Alumno> listaAlumnoInscriptos = new ArrayList();
         try {

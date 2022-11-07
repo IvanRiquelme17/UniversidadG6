@@ -17,11 +17,12 @@ import universidadg6.modelo.Materia;
  */
 public class internalMateria extends javax.swing.JInternalFrame {
 
-    /**
-     * Creates new form internalMateria
-     */
+    private Connection con;
+    private MateriaData materia;
+
     public internalMateria() {
         initComponents();
+        materia = new MateriaData(con);
     }
 
     /**
@@ -82,6 +83,11 @@ public class internalMateria extends javax.swing.JInternalFrame {
         });
 
         textCode.setFont(new java.awt.Font("Calibri", 1, 18)); // NOI18N
+        textCode.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                textCodeActionPerformed(evt);
+            }
+        });
 
         labelName.setFont(new java.awt.Font("Calibri", 1, 24)); // NOI18N
         labelName.setText("Nombre");
@@ -109,6 +115,7 @@ public class internalMateria extends javax.swing.JInternalFrame {
         });
 
         boxEstado.setFont(new java.awt.Font("Calibri", 1, 18)); // NOI18N
+        boxEstado.setSelected(true);
         boxEstado.setText("Estado");
         boxEstado.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
         boxEstado.addActionListener(new java.awt.event.ActionListener() {
@@ -138,6 +145,11 @@ public class internalMateria extends javax.swing.JInternalFrame {
         buttonUpdate.setFont(new java.awt.Font("Calibri", 1, 18)); // NOI18N
         buttonUpdate.setText("Actualizar");
         buttonUpdate.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 1, 1, 1));
+        buttonUpdate.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                buttonUpdateActionPerformed(evt);
+            }
+        });
 
         jButton1.setFont(new java.awt.Font("Calibri", 1, 18)); // NOI18N
         jButton1.setText("Limpiar");
@@ -169,16 +181,16 @@ public class internalMateria extends javax.swing.JInternalFrame {
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGap(38, 38, 38)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(textAnio, javax.swing.GroupLayout.PREFERRED_SIZE, 87, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addGroup(jPanel1Layout.createSequentialGroup()
                                 .addComponent(buttonBorrar, javax.swing.GroupLayout.PREFERRED_SIZE, 91, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addGap(64, 64, 64)
                                 .addComponent(buttonUpdate, javax.swing.GroupLayout.PREFERRED_SIZE, 108, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addGap(43, 43, 43)
                                 .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 89, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addComponent(textName, javax.swing.GroupLayout.PREFERRED_SIZE, 228, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(textCode, javax.swing.GroupLayout.PREFERRED_SIZE, 128, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(boxEstado, javax.swing.GroupLayout.PREFERRED_SIZE, 81, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                            .addComponent(boxEstado, javax.swing.GroupLayout.PREFERRED_SIZE, 81, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(textAnio, javax.swing.GroupLayout.PREFERRED_SIZE, 87, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(textName, javax.swing.GroupLayout.PREFERRED_SIZE, 228, javax.swing.GroupLayout.PREFERRED_SIZE))))
                 .addContainerGap(108, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
@@ -199,9 +211,9 @@ public class internalMateria extends javax.swing.JInternalFrame {
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(labelAño)
                     .addComponent(textAnio, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(42, 42, 42)
+                .addGap(66, 66, 66)
                 .addComponent(boxEstado)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 168, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 149, Short.MAX_VALUE)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(buttonUpdate)
                     .addComponent(buttonBorrar)
@@ -225,21 +237,31 @@ public class internalMateria extends javax.swing.JInternalFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void buttonBuscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buttonBuscarActionPerformed
-        // TODO add your handling code here:
+        int codigo = Integer.parseInt(textCode.getText());
+        Materia m = materia.buscarMateria(codigo);
+        materia.buscarMateria(codigo);
+        textName.setText(m.getNombre());
+        textAnio.setText(String.valueOf(m.getAnio()));
+
+
     }//GEN-LAST:event_buttonBuscarActionPerformed
 
     private void buttonGuardarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buttonGuardarActionPerformed
-        Connection con=Conexion.getConexion();
         int anio = Integer.parseInt(textAnio.getText());
         String nombreMateria = textName.getText();
-        Materia m = new Materia(nombreMateria,anio,true);
-        MateriaData materia = new MateriaData(con);
+        Materia m = new Materia(nombreMateria, anio, true);
         materia.guardarMateria(m);
-        JOptionPane.showMessageDialog(null, "Materia creada con éxito");
+        textCode.setText("");
+        textName.setText("");
+        textAnio.setText("");
     }//GEN-LAST:event_buttonGuardarActionPerformed
 
     private void buttonBorrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buttonBorrarActionPerformed
-        jPanel1.removeAll();
+        int codigo = Integer.parseInt(textCode.getText());
+        materia.borrarMateria(codigo);
+        textCode.setText("");
+        textName.setText("");
+        textAnio.setText("");
     }//GEN-LAST:event_buttonBorrarActionPerformed
 
     private void boxEstadoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_boxEstadoActionPerformed
@@ -264,10 +286,27 @@ public class internalMateria extends javax.swing.JInternalFrame {
     }//GEN-LAST:event_textAnioFocusLost
 
     private void textNameFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_textNameFocusLost
-        if(textName.getText().isEmpty()){
-        JOptionPane.showMessageDialog(null, "El campo tiene que estar completo");
+        if (textName.getText().isEmpty()) {
+            JOptionPane.showMessageDialog(null, "El campo tiene que estar completo");
         }
     }//GEN-LAST:event_textNameFocusLost
+
+    private void buttonUpdateActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buttonUpdateActionPerformed
+
+        int id = Integer.parseInt(textCode.getText());
+        String nombre = textName.getText();
+        int anio = Integer.parseInt(textAnio.getText());
+        boolean estado = boxEstado.isSelected();
+        Materia m = new Materia(id, nombre, anio, estado);
+        materia.actualizarMateria(m, Integer.parseInt(textCode.getText()));
+        textCode.setText("");
+        textName.setText("");
+        textAnio.setText("");
+    }//GEN-LAST:event_buttonUpdateActionPerformed
+
+    private void textCodeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_textCodeActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_textCodeActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
