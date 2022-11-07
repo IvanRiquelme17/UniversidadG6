@@ -59,6 +59,11 @@ public class jfMain extends javax.swing.JFrame {
         jBFormMateria.setFont(new java.awt.Font("Calibri", 1, 14)); // NOI18N
         jBFormMateria.setForeground(new java.awt.Color(255, 255, 255));
         jBFormMateria.setText("Formulario Materias");
+        jBFormMateria.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jBFormMateriaActionPerformed(evt);
+            }
+        });
 
         jBFormAlumno.setBackground(new java.awt.Color(6, 115, 70));
         jBFormAlumno.setFont(new java.awt.Font("Calibri", 1, 14)); // NOI18N
@@ -74,6 +79,11 @@ public class jfMain extends javax.swing.JFrame {
         jBFormInscrip.setFont(new java.awt.Font("Calibri", 1, 14)); // NOI18N
         jBFormInscrip.setForeground(new java.awt.Color(255, 255, 255));
         jBFormInscrip.setText("Formulario Inscripción");
+        jBFormInscrip.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jBFormInscripActionPerformed(evt);
+            }
+        });
 
         jBCargaNotas.setBackground(new java.awt.Color(6, 115, 70));
         jBCargaNotas.setFont(new java.awt.Font("Calibri", 1, 14)); // NOI18N
@@ -171,6 +181,22 @@ public class jfMain extends javax.swing.JFrame {
         formAlumno.setVisible(true);
         jDesktop.add(formAlumno);
     }//GEN-LAST:event_jBFormAlumnoActionPerformed
+
+    private void jBFormInscripActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBFormInscripActionPerformed
+        jDesktop.removeAll();
+        jDesktop.repaint();
+        jifInscripcion formInscrip = new jifInscripcion();
+        formInscrip.setVisible(true);
+        jDesktop.add(formInscrip);
+    }//GEN-LAST:event_jBFormInscripActionPerformed
+
+    private void jBFormMateriaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBFormMateriaActionPerformed
+        jDesktop.removeAll();
+        jDesktop.repaint();
+        jifFormMateria formMateria = new jifFormMateria();
+        formMateria.setVisible(true);
+        jDesktop.add(formMateria);
+    }//GEN-LAST:event_jBFormMateriaActionPerformed
 
     /**
      * @param args the command line arguments

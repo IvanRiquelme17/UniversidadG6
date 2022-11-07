@@ -5,15 +5,22 @@
  */
 package Vistas;
 
+import Data.AlumnoData;
+import Data.Conexion;
+import java.sql.Connection;
+import java.time.LocalDate;
+import java.util.Calendar;
+import universidadg6.modelo.Alumno;
+
 /**
  *
  * @author Martin
  */
 public class jifFormAlumno extends javax.swing.JInternalFrame {
-
-    /**
-     * Creates new form jifFormAlumno
-     */
+    
+    Connection con = Conexion.getConexion();
+    AlumnoData aData = new AlumnoData(con);
+    
     public jifFormAlumno() {
         initComponents();
     }
@@ -40,14 +47,15 @@ public class jifFormAlumno extends javax.swing.JInternalFrame {
         jLabelDNI1 = new javax.swing.JLabel();
         jTxTFNombre = new javax.swing.JTextField();
         jLabelDNI2 = new javax.swing.JLabel();
-        jTxTFFechaNac = new javax.swing.JTextField();
         jLabelDNI3 = new javax.swing.JLabel();
         jCheckBoxActivo = new javax.swing.JCheckBox();
         jLabelActivo = new javax.swing.JLabel();
-        jButton1 = new javax.swing.JButton();
-        jButton2 = new javax.swing.JButton();
-        jButton3 = new javax.swing.JButton();
-        jButton4 = new javax.swing.JButton();
+        jButtGuardar = new javax.swing.JButton();
+        jButtActualizar = new javax.swing.JButton();
+        jButtBorrar = new javax.swing.JButton();
+        jButtLimpiar = new javax.swing.JButton();
+        jDCFechaNac = new com.toedter.calendar.JDateChooser();
+        jTxTFFechaNac = new javax.swing.JTextField();
 
         jPanel1.setBackground(new java.awt.Color(9, 96, 62));
         jPanel1.setForeground(new java.awt.Color(9, 96, 62));
@@ -74,6 +82,11 @@ public class jifFormAlumno extends javax.swing.JInternalFrame {
         jButtBuscar.setBackground(new java.awt.Color(6, 115, 70));
         jButtBuscar.setForeground(new java.awt.Color(255, 255, 255));
         jButtBuscar.setText("Buscar");
+        jButtBuscar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButtBuscarActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanelBuscarLayout = new javax.swing.GroupLayout(jPanelBuscar);
         jPanelBuscar.setLayout(jPanelBuscarLayout);
@@ -144,6 +157,60 @@ public class jifFormAlumno extends javax.swing.JInternalFrame {
         jLabelDNI2.setForeground(new java.awt.Color(255, 255, 71));
         jLabelDNI2.setText("Nombre:");
 
+        jLabelDNI3.setFont(new java.awt.Font("Calibri", 1, 18)); // NOI18N
+        jLabelDNI3.setForeground(new java.awt.Color(255, 255, 71));
+        jLabelDNI3.setText("FechaNacimiento:");
+
+        jCheckBoxActivo.setBackground(new java.awt.Color(6, 115, 70));
+        jCheckBoxActivo.setForeground(new java.awt.Color(51, 51, 51));
+        jCheckBoxActivo.setSelected(true);
+
+        jLabelActivo.setFont(new java.awt.Font("Calibri", 1, 18)); // NOI18N
+        jLabelActivo.setForeground(new java.awt.Color(255, 255, 71));
+        jLabelActivo.setText("Activo:");
+
+        jButtGuardar.setBackground(new java.awt.Color(6, 115, 70));
+        jButtGuardar.setFont(new java.awt.Font("Calibri", 1, 12)); // NOI18N
+        jButtGuardar.setForeground(new java.awt.Color(255, 255, 255));
+        jButtGuardar.setText("Guardar");
+        jButtGuardar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButtGuardarActionPerformed(evt);
+            }
+        });
+
+        jButtActualizar.setBackground(new java.awt.Color(6, 115, 70));
+        jButtActualizar.setFont(new java.awt.Font("Calibri", 1, 12)); // NOI18N
+        jButtActualizar.setForeground(new java.awt.Color(255, 255, 255));
+        jButtActualizar.setText("Actualizar");
+        jButtActualizar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButtActualizarActionPerformed(evt);
+            }
+        });
+
+        jButtBorrar.setBackground(new java.awt.Color(6, 115, 70));
+        jButtBorrar.setFont(new java.awt.Font("Calibri", 1, 12)); // NOI18N
+        jButtBorrar.setForeground(new java.awt.Color(255, 255, 255));
+        jButtBorrar.setText("Borrar");
+
+        jButtLimpiar.setBackground(new java.awt.Color(6, 115, 70));
+        jButtLimpiar.setFont(new java.awt.Font("Calibri", 1, 12)); // NOI18N
+        jButtLimpiar.setForeground(new java.awt.Color(255, 255, 255));
+        jButtLimpiar.setText("Limpiar");
+
+        jDCFechaNac.setBackground(new java.awt.Color(6, 115, 70));
+        jDCFechaNac.setForeground(new java.awt.Color(6, 115, 70));
+        jDCFechaNac.addAncestorListener(new javax.swing.event.AncestorListener() {
+            public void ancestorMoved(javax.swing.event.AncestorEvent evt) {
+            }
+            public void ancestorAdded(javax.swing.event.AncestorEvent evt) {
+                jDCFechaNacAncestorAdded(evt);
+            }
+            public void ancestorRemoved(javax.swing.event.AncestorEvent evt) {
+            }
+        });
+
         jTxTFFechaNac.setBackground(new java.awt.Color(6, 115, 70));
         jTxTFFechaNac.setFont(new java.awt.Font("Calibri", 0, 14)); // NOI18N
         jTxTFFechaNac.setForeground(new java.awt.Color(255, 255, 109));
@@ -153,37 +220,6 @@ public class jifFormAlumno extends javax.swing.JInternalFrame {
             }
         });
 
-        jLabelDNI3.setFont(new java.awt.Font("Calibri", 1, 18)); // NOI18N
-        jLabelDNI3.setForeground(new java.awt.Color(255, 255, 71));
-        jLabelDNI3.setText("FechaNacimiento:");
-
-        jCheckBoxActivo.setBackground(new java.awt.Color(6, 115, 70));
-        jCheckBoxActivo.setForeground(new java.awt.Color(51, 51, 51));
-
-        jLabelActivo.setFont(new java.awt.Font("Calibri", 1, 18)); // NOI18N
-        jLabelActivo.setForeground(new java.awt.Color(255, 255, 71));
-        jLabelActivo.setText("Activo:");
-
-        jButton1.setBackground(new java.awt.Color(6, 115, 70));
-        jButton1.setFont(new java.awt.Font("Calibri", 1, 12)); // NOI18N
-        jButton1.setForeground(new java.awt.Color(255, 255, 255));
-        jButton1.setText("Guardar");
-
-        jButton2.setBackground(new java.awt.Color(6, 115, 70));
-        jButton2.setFont(new java.awt.Font("Calibri", 1, 12)); // NOI18N
-        jButton2.setForeground(new java.awt.Color(255, 255, 255));
-        jButton2.setText("Actualizar");
-
-        jButton3.setBackground(new java.awt.Color(6, 115, 70));
-        jButton3.setFont(new java.awt.Font("Calibri", 1, 12)); // NOI18N
-        jButton3.setForeground(new java.awt.Color(255, 255, 255));
-        jButton3.setText("Borrar");
-
-        jButton4.setBackground(new java.awt.Color(6, 115, 70));
-        jButton4.setFont(new java.awt.Font("Calibri", 1, 12)); // NOI18N
-        jButton4.setForeground(new java.awt.Color(255, 255, 255));
-        jButton4.setText("Limpiar");
-
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
         jPanel2Layout.setHorizontalGroup(
@@ -192,14 +228,14 @@ public class jifFormAlumno extends javax.swing.JInternalFrame {
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel2Layout.createSequentialGroup()
                         .addGap(18, 18, 18)
-                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(jPanel2Layout.createSequentialGroup()
                                 .addComponent(jLabelDNI)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                                 .addComponent(jTxTFDNI, javax.swing.GroupLayout.PREFERRED_SIZE, 185, javax.swing.GroupLayout.PREFERRED_SIZE))
                             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
                                 .addComponent(jLabelDNI1)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 92, Short.MAX_VALUE)
                                 .addComponent(jTxTFApellido, javax.swing.GroupLayout.PREFERRED_SIZE, 185, javax.swing.GroupLayout.PREFERRED_SIZE))
                             .addGroup(jPanel2Layout.createSequentialGroup()
                                 .addComponent(jLabelDNI2)
@@ -210,22 +246,24 @@ public class jifFormAlumno extends javax.swing.JInternalFrame {
                                     .addGroup(jPanel2Layout.createSequentialGroup()
                                         .addComponent(jLabelActivo)
                                         .addGap(18, 18, 18)
-                                        .addComponent(jCheckBoxActivo)
-                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED))
+                                        .addComponent(jCheckBoxActivo))
+                                    .addComponent(jLabelDNI3, javax.swing.GroupLayout.Alignment.TRAILING))
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(jTxTFFechaNac, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 185, javax.swing.GroupLayout.PREFERRED_SIZE)
                                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
-                                        .addComponent(jLabelDNI3)
-                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)))
-                                .addComponent(jTxTFFechaNac, javax.swing.GroupLayout.PREFERRED_SIZE, 185, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                                        .addComponent(jDCFechaNac, javax.swing.GroupLayout.PREFERRED_SIZE, 185, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addGap(8, 8, 8))))))
                     .addGroup(jPanel2Layout.createSequentialGroup()
                         .addGap(47, 47, 47)
-                        .addComponent(jButton1)
+                        .addComponent(jButtGuardar)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jButton2)
+                        .addComponent(jButtActualizar)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jButton3)
+                        .addComponent(jButtBorrar)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jButton4)))
-                .addContainerGap(23, Short.MAX_VALUE))
+                        .addComponent(jButtLimpiar)))
+                .addContainerGap())
         );
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -241,23 +279,26 @@ public class jifFormAlumno extends javax.swing.JInternalFrame {
                 .addGap(18, 20, Short.MAX_VALUE)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabelDNI2)
-                    .addComponent(jTxTFNombre))
-                .addGap(20, 20, 20)
+                    .addComponent(jTxTFNombre, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 22, Short.MAX_VALUE)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jTxTFFechaNac)
+                    .addComponent(jLabelDNI3, javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(jDCFechaNac, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel2Layout.createSequentialGroup()
-                        .addGap(0, 0, Short.MAX_VALUE)
-                        .addComponent(jLabelDNI3)))
-                .addGap(20, 20, 20)
-                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(jLabelActivo)
-                    .addComponent(jCheckBoxActivo))
+                        .addGap(20, 20, 20)
+                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(jLabelActivo)
+                            .addComponent(jCheckBoxActivo)))
+                    .addGroup(jPanel2Layout.createSequentialGroup()
+                        .addGap(9, 9, 9)
+                        .addComponent(jTxTFFechaNac, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addGap(25, 25, 25)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jButton1)
-                    .addComponent(jButton2)
-                    .addComponent(jButton3)
-                    .addComponent(jButton4)))
+                    .addComponent(jButtGuardar)
+                    .addComponent(jButtActualizar)
+                    .addComponent(jButtBorrar)
+                    .addComponent(jButtLimpiar)))
         );
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
@@ -274,7 +315,7 @@ public class jifFormAlumno extends javax.swing.JInternalFrame {
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jPanelBuscar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                .addContainerGap(186, Short.MAX_VALUE))
+                .addContainerGap(173, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -283,9 +324,9 @@ public class jifFormAlumno extends javax.swing.JInternalFrame {
                 .addComponent(jLabelTitulo)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jPanelBuscar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap(12, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -314,18 +355,60 @@ public class jifFormAlumno extends javax.swing.JInternalFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_jTxTFNombreActionPerformed
 
+    private void jButtGuardarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtGuardarActionPerformed
+        Alumno alumno = new Alumno();
+        long dni = Long.parseLong(jTxTFDNI.getText());
+        String apellido = jTxTFApellido.getText();
+        String nombre = jTxTFNombre.getText();
+        boolean activo = jCheckBoxActivo.isSelected();
+        int dia = jDCFechaNac.getCalendar().get(Calendar.DAY_OF_MONTH);
+        int mes = jDCFechaNac.getCalendar().get(Calendar.MONTH);
+        int anio = jDCFechaNac.getCalendar().get(Calendar.YEAR);
+        
+        alumno.setDni(dni);
+        alumno.setApellido(apellido);
+        alumno.setNombre(nombre);
+        alumno.setFechaNacimiento(LocalDate.of(anio, mes, dia));
+        alumno.setActivo(activo);
+        aData.guardarAlumno(alumno);
+        jTxTFDNI.setText("");
+        jTxTFApellido.setText("");
+        jTxTFNombre.setText("");
+        jTxTFFechaNac.setText("");
+        jTxTFFechaNac.setText("");
+    }//GEN-LAST:event_jButtGuardarActionPerformed
+
+    private void jButtBuscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtBuscarActionPerformed
+        Alumno a = aData.buscarAlumno(Integer.parseInt(jTxTFBuscarAlumno.getText()));
+        jTxTFDNI.setText(String.valueOf(a.getDni()));
+        jTxTFApellido.setText(a.getApellido());
+        jTxTFNombre.setText(a.getNombre());
+        jTxTFFechaNac.setText("");
+        jTxTFFechaNac.setText(a.getFechaNacimiento().toString());
+    }//GEN-LAST:event_jButtBuscarActionPerformed
+
+    private void jButtActualizarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtActualizarActionPerformed
+        Alumno a = aData.buscarAlumno(Integer.parseInt(jTxTFBuscarAlumno.getText()));
+        aData.actualizarAlumno(new Alumno(Integer.parseInt(jTxTFDNI.getText()), jTxTFApellido.getText(), jTxTFNombre.getText(), LocalDate.MIN, jCheckBoxActivo.areFocusTraversalKeysSet(1)), Integer.parseInt(jTxTFBuscarAlumno.getText()));
+    }//GEN-LAST:event_jButtActualizarActionPerformed
+
+    private void jDCFechaNacAncestorAdded(javax.swing.event.AncestorEvent evt) {//GEN-FIRST:event_jDCFechaNacAncestorAdded
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jDCFechaNacAncestorAdded
+
     private void jTxTFFechaNacActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTxTFFechaNacActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_jTxTFFechaNacActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton jButtActualizar;
+    private javax.swing.JButton jButtBorrar;
     private javax.swing.JButton jButtBuscar;
-    private javax.swing.JButton jButton1;
-    private javax.swing.JButton jButton2;
-    private javax.swing.JButton jButton3;
-    private javax.swing.JButton jButton4;
+    private javax.swing.JButton jButtGuardar;
+    private javax.swing.JButton jButtLimpiar;
     private javax.swing.JCheckBox jCheckBoxActivo;
+    private com.toedter.calendar.JDateChooser jDCFechaNac;
     private javax.swing.JLabel jLabelActivo;
     private javax.swing.JLabel jLabelDNI;
     private javax.swing.JLabel jLabelDNI1;

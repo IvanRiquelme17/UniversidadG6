@@ -134,6 +134,9 @@
             </Property>
             <Property name="text" type="java.lang.String" value="Formulario Materias"/>
           </Properties>
+          <Events>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jBFormMateriaActionPerformed"/>
+          </Events>
         </Component>
         <Component class="javax.swing.JButton" name="jBFormAlumno">
           <Properties>
@@ -165,6 +168,9 @@
             </Property>
             <Property name="text" type="java.lang.String" value="Formulario Inscripci&#xf3;n"/>
           </Properties>
+          <Events>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jBFormInscripActionPerformed"/>
+          </Events>
         </Component>
         <Component class="javax.swing.JButton" name="jBCargaNotas">
           <Properties>

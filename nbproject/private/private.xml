@@ -4,9 +4,12 @@
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
             <file>file:/C:/Users/Martin/Documents/GitHub/UniversidadG6/src/Vistas/jfMain.java</file>
-            <file>file:/C:/Users/Martin/Documents/GitHub/UniversidadG6/src/universidadg6/modelo/Alumno.java</file>
-            <file>file:/C:/Users/Martin/Documents/GitHub/UniversidadG6/src/universidadg6/modelo/Nota.java</file>
+            <file>file:/C:/Users/Martin/Documents/GitHub/UniversidadG6/src/Vistas/jifFormAlumno.java</file>
+            <file>file:/C:/Users/Martin/Documents/GitHub/UniversidadG6/src/Data/NotaData.java</file>
+            <file>file:/C:/Users/Martin/Documents/GitHub/UniversidadG6/src/Data/Conexion.java</file>
             <file>file:/C:/Users/Martin/Documents/GitHub/UniversidadG6/src/universidadg6/UniversidadG6.java</file>
+            <file>file:/C:/Users/Martin/Documents/GitHub/UniversidadG6/src/Vistas/jifFormMateria.java</file>
+            <file>file:/C:/Users/Martin/Documents/GitHub/UniversidadG6/src/Vistas/jifInscripcion.java</file>
         </group>
     </open-files>
 </project-private>
