@@ -402,6 +402,9 @@
                 </Property>
                 <Property name="text" type="java.lang.String" value="Borrar"/>
               </Properties>
+              <Events>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jButtBorrarActionPerformed"/>
+              </Events>
             </Component>
             <Component class="javax.swing.JButton" name="jButtLimpiar">
               <Properties>
@@ -416,6 +419,9 @@
                 </Property>
                 <Property name="text" type="java.lang.String" value="Limpiar"/>
               </Properties>
+              <Events>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jButtLimpiarActionPerformed"/>
+              </Events>
             </Component>
           </SubComponents>
         </Container>

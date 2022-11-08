@@ -5,15 +5,20 @@
  */
 package Vistas;
 
+import Data.Conexion;
+import Data.MateriaData;
+import java.sql.Connection;
+import universidadg6.modelo.Materia;
+
 /**
  *
  * @author Martin
  */
 public class jifFormMateria extends javax.swing.JInternalFrame {
 
-    /**
-     * Creates new form jifFormMateria
-     */
+    Connection con = Conexion.getConexion();
+    MateriaData mData = new MateriaData(con);
+
     public jifFormMateria() {
         initComponents();
     }
@@ -164,11 +169,21 @@ public class jifFormMateria extends javax.swing.JInternalFrame {
         jButtBorrar.setFont(new java.awt.Font("Calibri", 1, 12)); // NOI18N
         jButtBorrar.setForeground(new java.awt.Color(255, 255, 255));
         jButtBorrar.setText("Borrar");
+        jButtBorrar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButtBorrarActionPerformed(evt);
+            }
+        });
 
         jButtLimpiar.setBackground(new java.awt.Color(6, 115, 70));
         jButtLimpiar.setFont(new java.awt.Font("Calibri", 1, 12)); // NOI18N
         jButtLimpiar.setForeground(new java.awt.Color(255, 255, 255));
         jButtLimpiar.setText("Limpiar");
+        jButtLimpiar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButtLimpiarActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
@@ -272,7 +287,12 @@ public class jifFormMateria extends javax.swing.JInternalFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jButtBuscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtBuscarActionPerformed
-        
+        int codigo = Integer.parseInt(jTxTFBuscarMateria.getText());
+        Materia m = mData.buscarMateria(codigo);
+        mData.buscarMateria(codigo);
+        jTxTFNombre.setText(m.getNombre());
+        jTxTFAnio.setText(String.valueOf(m.getAnio()));
+        jCheckBoxActivo.setSelected(m.isActivo());
     }//GEN-LAST:event_jButtBuscarActionPerformed
 
     private void jTxTFNombreActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTxTFNombreActionPerformed
@@ -284,12 +304,40 @@ public class jifFormMateria extends javax.swing.JInternalFrame {
     }//GEN-LAST:event_jTxTFAnioActionPerformed
 
     private void jButtGuardarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtGuardarActionPerformed
-        
+        int anio = Integer.parseInt(jTxTFAnio.getText());
+        String nombreMateria = jTxTFNombre.getText();
+        Materia m = new Materia(nombreMateria, anio, true);
+        mData.guardarMateria(m);
+        jTxTFBuscarMateria.setText("");
+        jTxTFNombre.setText("");
+        jTxTFAnio.setText("");
     }//GEN-LAST:event_jButtGuardarActionPerformed
 
     private void jButtActualizarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtActualizarActionPerformed
-        
+        int id = Integer.parseInt(jTxTFBuscarMateria.getText());
+        String nombre = jTxTFNombre.getText();
+        int anio = Integer.parseInt(jTxTFAnio.getText());
+        boolean estado = jCheckBoxActivo.isSelected();
+        Materia m = new Materia(id, nombre, anio, estado);
+        mData.actualizarMateria(m, Integer.parseInt(jTxTFBuscarMateria.getText()));
+        jTxTFBuscarMateria.setText("");
+        jTxTFNombre.setText("");
+        jTxTFAnio.setText("");
     }//GEN-LAST:event_jButtActualizarActionPerformed
+
+    private void jButtBorrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtBorrarActionPerformed
+        int codigo = Integer.parseInt(jTxTFBuscarMateria.getText());
+        mData.borrarMateria(codigo);
+        jTxTFBuscarMateria.setText("");
+        jTxTFNombre.setText("");
+        jTxTFAnio.setText("");
+    }//GEN-LAST:event_jButtBorrarActionPerformed
+
+    private void jButtLimpiarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtLimpiarActionPerformed
+        jTxTFBuscarMateria.setText("");
+        jTxTFNombre.setText("");
+        jTxTFAnio.setText("");
+    }//GEN-LAST:event_jButtLimpiarActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

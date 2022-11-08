@@ -7,24 +7,33 @@ package Vistas;
 
 import Data.AlumnoData;
 import Data.Conexion;
+import Data.NotaData;
 import java.sql.Connection;
 import java.util.ArrayList;
 import java.util.List;
+import javax.swing.JOptionPane;
+import javax.swing.table.DefaultTableModel;
 import universidadg6.modelo.Alumno;
+import universidadg6.modelo.Materia;
+import universidadg6.modelo.Nota;
 
 /**
  *
  * @author Martin
  */
 public class jifInscripcion extends javax.swing.JInternalFrame {
-    
+
     Connection con = Conexion.getConexion();
     AlumnoData aData = new AlumnoData(con);
+    NotaData nData = new NotaData();
     List<Alumno> listAlumno;
-    
+    private DefaultTableModel tabla;
+
     public jifInscripcion() {
         initComponents();
         llenarCombo();
+        tabla = new DefaultTableModel();
+        armarCabeceraTabla();
     }
 
     /**
@@ -61,10 +70,20 @@ public class jifInscripcion extends javax.swing.JInternalFrame {
         jButtInscribir.setBackground(new java.awt.Color(6, 115, 70));
         jButtInscribir.setForeground(new java.awt.Color(255, 255, 255));
         jButtInscribir.setText("Inscribir");
+        jButtInscribir.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButtInscribirActionPerformed(evt);
+            }
+        });
 
         jButtAnularInscrip.setBackground(new java.awt.Color(6, 115, 70));
         jButtAnularInscrip.setForeground(new java.awt.Color(255, 255, 255));
         jButtAnularInscrip.setText("Anular Inscripción");
+        jButtAnularInscrip.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButtAnularInscripActionPerformed(evt);
+            }
+        });
 
         jButtSalir.setBackground(new java.awt.Color(6, 115, 70));
         jButtSalir.setForeground(new java.awt.Color(255, 255, 255));
@@ -91,7 +110,7 @@ public class jifInscripcion extends javax.swing.JInternalFrame {
                 java.lang.Integer.class, java.lang.String.class, java.lang.Integer.class
             };
             boolean[] canEdit = new boolean [] {
-                false, false, true
+                false, false, false
             };
 
             public Class getColumnClass(int columnIndex) {
@@ -246,33 +265,126 @@ public class jifInscripcion extends javax.swing.JInternalFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jRButtNoInscripActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jRButtNoInscripActionPerformed
-        jRButtInscrip.setSelected(false);
-        jButtAnularInscrip.setEnabled(false);
-        jButtInscribir.setEnabled(true);
+        if (jRButtNoInscrip.isSelected()) {
+            jRButtInscrip.setSelected(false);
+            jButtAnularInscrip.setEnabled(false);
+            jButtInscribir.setEnabled(true);
+            cargarMateriasNoInscriptas();
+        } else if (!jRButtNoInscrip.isSelected()) {
+            borrarFilasTabla();
+        }
+
     }//GEN-LAST:event_jRButtNoInscripActionPerformed
 
     private void jRButtInscripActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jRButtInscripActionPerformed
-        jRButtNoInscrip.setSelected(false);
-        jButtAnularInscrip.setEnabled(true);
-        jButtInscribir.setEnabled(false);
+        if (jRButtInscrip.isSelected()) {
+            jRButtNoInscrip.setSelected(false);
+            jButtAnularInscrip.setEnabled(true);
+            jButtInscribir.setEnabled(false);
+            cargarMateriasInscriptas();
+        } else if (!jRButtInscrip.isSelected()) {
+            borrarFilasTabla();
+        }
+
     }//GEN-LAST:event_jRButtInscripActionPerformed
 
     private void jComboInscripcionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jComboInscripcionActionPerformed
-        
+
     }//GEN-LAST:event_jComboInscripcionActionPerformed
+
+    private void jButtInscribirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtInscribirActionPerformed
+        int filasSelec = jTableMaterias.getSelectedRow();
+        Alumno a = (Alumno) jComboInscripcion.getSelectedItem();
+
+        if (filasSelec != -1 && a != null) {
+            int idMateria = (int) tabla.getValueAt(filasSelec, 0);
+            String nombreMateria = (String) tabla.getValueAt(filasSelec, 1);
+            int anio = (int) tabla.getValueAt(filasSelec, 2);
+            Materia m = new Materia(idMateria, nombreMateria, anio, true);
+            Nota n = new Nota(a, m, -1);
+            nData.guardarInscripcion(n);
+            borrarFilasTabla();
+        } else {
+            JOptionPane.showMessageDialog(this, "Seleccione alguna/s materia/s");
+        }
+
+    }//GEN-LAST:event_jButtInscribirActionPerformed
+
+    private void jButtAnularInscripActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtAnularInscripActionPerformed
+        int filasSelec[] = jTableMaterias.getSelectedRows();
+        Alumno a = (Alumno) jComboInscripcion.getSelectedItem();
+        for (int i : filasSelec) {
+            if (filasSelec[i] != -1 && a != null) {
+                int idMateria = (int) tabla.getValueAt(filasSelec[i], 0);
+                nData.borrarInscripcion(a.getId_alumno(), idMateria);
+                borrarFilasTabla();
+            } else {
+                JOptionPane.showMessageDialog(this, "Seleccione alguna/s materia/s");
+            }
+        }
+    }//GEN-LAST:event_jButtAnularInscripActionPerformed
 
     private void llenarCombo() {
         listAlumno = aData.obtenerAlumnos();
         for (Alumno alumno : listAlumno) {
-            jComboInscripcion.addItem(alumno.toString());
+            jComboInscripcion.addItem(alumno);
         }
+    }
+
+    private void borrarFilasTabla() {
+        if (tabla != null) {
+            int aux = tabla.getRowCount() - 1;
+            for (int i = aux; i >= 0; i--) {
+                tabla.removeRow(i);
+            }
+        }
+    }
+
+    private void cargarMateriasNoInscriptas() {
+        borrarFilasTabla();
+        Alumno aSelec = (Alumno) jComboInscripcion.getSelectedItem();
+        if (aSelec != null) {
+            ArrayList<Materia> listaMateriaNoIns = (ArrayList) nData.obtenerMateriasNoInscriptas(aSelec.getId_alumno());
+
+            for (Materia m : listaMateriaNoIns) {
+                tabla.addRow(new Object[]{m.getId_materia(), m.getNombre(), m.getAnio()});
+            }
+        } else {
+            JOptionPane.showMessageDialog(this, "Seleccione un alumno");
+        }
+    }
+
+    private void cargarMateriasInscriptas() {
+        borrarFilasTabla();
+        Alumno aSelec = (Alumno) jComboInscripcion.getSelectedItem();
+        if (aSelec != null) {
+            ArrayList<Materia> listaMateriaIns = (ArrayList) nData.obtenerMateriasInscriptas(aSelec.getId_alumno());
+
+            for (Materia m : listaMateriaIns) {
+                tabla.addRow(new Object[]{m.getId_materia(), m.getNombre(), m.getAnio()});
+            }
+        } else {
+            JOptionPane.showMessageDialog(this, "Seleccione un alumno");
+        }
+    }
+
+    private void armarCabeceraTabla() {
+        ArrayList<Object> columnas = new ArrayList();
+        columnas.add("Código");
+        columnas.add("Nombre");
+        columnas.add("Año");
+
+        for (Object aux : columnas) {
+            tabla.addColumn(aux);
+        }
+        jTableMaterias.setModel(tabla);
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jButtAnularInscrip;
     private javax.swing.JButton jButtInscribir;
     private javax.swing.JButton jButtSalir;
-    private javax.swing.JComboBox<String> jComboInscripcion;
+    private javax.swing.JComboBox<Alumno> jComboInscripcion;
     private javax.swing.JLabel jLabelTitulo;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
@@ -284,5 +396,4 @@ public class jifInscripcion extends javax.swing.JInternalFrame {
     private javax.swing.JLabel jTxTAlumno;
     // End of variables declaration//GEN-END:variables
 
-    
 }

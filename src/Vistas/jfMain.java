@@ -171,7 +171,7 @@ public class jfMain extends javax.swing.JFrame {
     }//GEN-LAST:event_jBCargaNotasActionPerformed
 
     private void jBSalirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBSalirActionPerformed
-        // TODO add your handling code here:
+        System.exit(0);
     }//GEN-LAST:event_jBSalirActionPerformed
 
     private void jBFormAlumnoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBFormAlumnoActionPerformed
