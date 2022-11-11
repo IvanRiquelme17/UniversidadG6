@@ -415,16 +415,19 @@ public class jifFormAlumno extends javax.swing.JInternalFrame {
         String apellido = jTxTFApellido.getText();
         String nombre = jTxTFNombre.getText();
         boolean activo = jCheckBoxActivo.isSelected();
-        int dia = jDCFechaNac.getCalendar().get(Calendar.DAY_OF_MONTH);
-        int mes = jDCFechaNac.getCalendar().get(Calendar.MONTH);
-        int anio = jDCFechaNac.getCalendar().get(Calendar.YEAR);
-
-        alumno.setDni(dni);
-        alumno.setApellido(apellido);
-        alumno.setNombre(nombre);
-        alumno.setFechaNacimiento(LocalDate.of(anio, mes + 1, dia));
-        alumno.setActivo(activo);
-        aData.guardarAlumno(alumno);
+        if (jDCFechaNac.getCalendar() != null) {
+            int dia = jDCFechaNac.getCalendar().get(Calendar.DAY_OF_MONTH);
+            int mes = jDCFechaNac.getCalendar().get(Calendar.MONTH);
+            int anio = jDCFechaNac.getCalendar().get(Calendar.YEAR);
+            alumno.setFechaNacimiento(LocalDate.of(anio, mes + 1, dia));
+            alumno.setDni(dni);
+            alumno.setApellido(apellido);
+            alumno.setNombre(nombre);
+            alumno.setActivo(activo);
+            aData.guardarAlumno(alumno);
+        } else {
+            JOptionPane.showMessageDialog(null, "Rellene todos los campos.", "Error", JOptionPane.ERROR_MESSAGE);
+        }
 
         jTxTFDNI.setText("");
         jTxTFApellido.setText("");
@@ -442,19 +445,22 @@ public class jifFormAlumno extends javax.swing.JInternalFrame {
             jTxTFFechaNac.setText("");
             jTxTFFechaNac.setText(a.getFechaNacimiento().toString());
         } else {
-            JOptionPane.showMessageDialog(null, "No se ha encontrado al alumno","Error",JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(null, "No se ha encontrado al alumno", "Error", JOptionPane.ERROR_MESSAGE);
         }
 
     }//GEN-LAST:event_jButtBuscarActionPerformed
 
     private void jButtActualizarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtActualizarActionPerformed
         Alumno a = aData.buscarAlumno(Integer.parseInt(jTxTFBuscarAlumno.getText()));
-        int dia = jDCFechaNac.getCalendar().get(Calendar.DAY_OF_MONTH);
-        int mes = jDCFechaNac.getCalendar().get(Calendar.MONTH);
-        int anio = jDCFechaNac.getCalendar().get(Calendar.YEAR);
-        a.setFechaNacimiento(LocalDate.of(anio, mes + 1, dia));
+        if (jDCFechaNac.getCalendar() != null) {
+            int dia = jDCFechaNac.getCalendar().get(Calendar.DAY_OF_MONTH);
+            int mes = jDCFechaNac.getCalendar().get(Calendar.MONTH);
+            int anio = jDCFechaNac.getCalendar().get(Calendar.YEAR);
+            a.setFechaNacimiento(LocalDate.of(anio, mes + 1, dia));
+        }
+
         aData.actualizarAlumno(new Alumno(Integer.parseInt(jTxTFDNI.getText()), jTxTFApellido.getText(), jTxTFNombre.getText(), a.getFechaNacimiento(), jCheckBoxActivo.areFocusTraversalKeysSet(1)), Integer.parseInt(jTxTFBuscarAlumno.getText()));
-        
+
         jTxTFDNI.setText("");
         jTxTFApellido.setText("");
         jTxTFNombre.setText("");
@@ -467,7 +473,7 @@ public class jifFormAlumno extends javax.swing.JInternalFrame {
     }//GEN-LAST:event_jDCFechaNacAncestorAdded
 
     private void jTxTFFechaNacActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTxTFFechaNacActionPerformed
-        
+
     }//GEN-LAST:event_jTxTFFechaNacActionPerformed
 
     private void jTxTFBuscarAlumnoKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jTxTFBuscarAlumnoKeyTyped
