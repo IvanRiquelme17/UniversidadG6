@@ -7,9 +7,11 @@ package Vistas;
 
 import Data.AlumnoData;
 import Data.Conexion;
+import java.awt.Color;
 import java.sql.Connection;
 import java.time.LocalDate;
 import java.util.Calendar;
+import javax.swing.JOptionPane;
 import universidadg6.modelo.Alumno;
 
 /**
@@ -17,10 +19,10 @@ import universidadg6.modelo.Alumno;
  * @author Martin
  */
 public class jifFormAlumno extends javax.swing.JInternalFrame {
-    
+
     Connection con = Conexion.getConexion();
     AlumnoData aData = new AlumnoData(con);
-    
+
     public jifFormAlumno() {
         initComponents();
     }
@@ -56,6 +58,8 @@ public class jifFormAlumno extends javax.swing.JInternalFrame {
         jButtLimpiar = new javax.swing.JButton();
         jDCFechaNac = new com.toedter.calendar.JDateChooser();
         jTxTFFechaNac = new javax.swing.JTextField();
+        jLabel1 = new javax.swing.JLabel();
+        jLabel2 = new javax.swing.JLabel();
 
         jPanel1.setBackground(new java.awt.Color(9, 96, 62));
         jPanel1.setForeground(new java.awt.Color(9, 96, 62));
@@ -78,9 +82,20 @@ public class jifFormAlumno extends javax.swing.JInternalFrame {
         jTxTFBuscarAlumno.setFont(new java.awt.Font("Calibri", 0, 14)); // NOI18N
         jTxTFBuscarAlumno.setForeground(new java.awt.Color(255, 255, 109));
         jTxTFBuscarAlumno.setText("Buscar Alumno...");
+        jTxTFBuscarAlumno.addFocusListener(new java.awt.event.FocusAdapter() {
+            public void focusGained(java.awt.event.FocusEvent evt) {
+                jTxTFBuscarAlumnoFocusGained(evt);
+            }
+        });
+        jTxTFBuscarAlumno.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                jTxTFBuscarAlumnoKeyTyped(evt);
+            }
+        });
 
         jButtBuscar.setBackground(new java.awt.Color(6, 115, 70));
         jButtBuscar.setForeground(new java.awt.Color(255, 255, 255));
+        jButtBuscar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/Buscar (3).png"))); // NOI18N
         jButtBuscar.setText("Buscar");
         jButtBuscar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -96,7 +111,7 @@ public class jifFormAlumno extends javax.swing.JInternalFrame {
                 .addComponent(jLabelLegajo)
                 .addGap(18, 18, 18)
                 .addComponent(jTxTFBuscarAlumno, javax.swing.GroupLayout.PREFERRED_SIZE, 185, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 24, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(jButtBuscar)
                 .addContainerGap())
         );
@@ -124,6 +139,11 @@ public class jifFormAlumno extends javax.swing.JInternalFrame {
         jTxTFDNI.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jTxTFDNIActionPerformed(evt);
+            }
+        });
+        jTxTFDNI.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                jTxTFDNIKeyTyped(evt);
             }
         });
 
@@ -172,6 +192,7 @@ public class jifFormAlumno extends javax.swing.JInternalFrame {
         jButtGuardar.setBackground(new java.awt.Color(6, 115, 70));
         jButtGuardar.setFont(new java.awt.Font("Calibri", 1, 12)); // NOI18N
         jButtGuardar.setForeground(new java.awt.Color(255, 255, 255));
+        jButtGuardar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/Guardar.png"))); // NOI18N
         jButtGuardar.setText("Guardar");
         jButtGuardar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -182,6 +203,7 @@ public class jifFormAlumno extends javax.swing.JInternalFrame {
         jButtActualizar.setBackground(new java.awt.Color(6, 115, 70));
         jButtActualizar.setFont(new java.awt.Font("Calibri", 1, 12)); // NOI18N
         jButtActualizar.setForeground(new java.awt.Color(255, 255, 255));
+        jButtActualizar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/Actualizar.png"))); // NOI18N
         jButtActualizar.setText("Actualizar");
         jButtActualizar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -192,28 +214,42 @@ public class jifFormAlumno extends javax.swing.JInternalFrame {
         jButtBorrar.setBackground(new java.awt.Color(6, 115, 70));
         jButtBorrar.setFont(new java.awt.Font("Calibri", 1, 12)); // NOI18N
         jButtBorrar.setForeground(new java.awt.Color(255, 255, 255));
+        jButtBorrar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/borrar.png"))); // NOI18N
         jButtBorrar.setText("Borrar");
+        jButtBorrar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButtBorrarActionPerformed(evt);
+            }
+        });
 
         jButtLimpiar.setBackground(new java.awt.Color(6, 115, 70));
         jButtLimpiar.setFont(new java.awt.Font("Calibri", 1, 12)); // NOI18N
         jButtLimpiar.setForeground(new java.awt.Color(255, 255, 255));
         jButtLimpiar.setText("Limpiar");
+        jButtLimpiar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButtLimpiarActionPerformed(evt);
+            }
+        });
 
         jDCFechaNac.setBackground(new java.awt.Color(6, 115, 70));
         jDCFechaNac.setForeground(new java.awt.Color(6, 115, 70));
         jDCFechaNac.addAncestorListener(new javax.swing.event.AncestorListener() {
-            public void ancestorMoved(javax.swing.event.AncestorEvent evt) {
-            }
             public void ancestorAdded(javax.swing.event.AncestorEvent evt) {
                 jDCFechaNacAncestorAdded(evt);
             }
             public void ancestorRemoved(javax.swing.event.AncestorEvent evt) {
+            }
+            public void ancestorMoved(javax.swing.event.AncestorEvent evt) {
             }
         });
 
         jTxTFFechaNac.setBackground(new java.awt.Color(6, 115, 70));
         jTxTFFechaNac.setFont(new java.awt.Font("Calibri", 0, 14)); // NOI18N
         jTxTFFechaNac.setForeground(new java.awt.Color(255, 255, 109));
+        jTxTFFechaNac.setCaretColor(new java.awt.Color(153, 153, 153));
+        jTxTFFechaNac.setDisabledTextColor(new java.awt.Color(255, 255, 71));
+        jTxTFFechaNac.setFocusable(false);
         jTxTFFechaNac.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jTxTFFechaNacActionPerformed(evt);
@@ -235,7 +271,7 @@ public class jifFormAlumno extends javax.swing.JInternalFrame {
                                 .addComponent(jTxTFDNI, javax.swing.GroupLayout.PREFERRED_SIZE, 185, javax.swing.GroupLayout.PREFERRED_SIZE))
                             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
                                 .addComponent(jLabelDNI1)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 92, Short.MAX_VALUE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                                 .addComponent(jTxTFApellido, javax.swing.GroupLayout.PREFERRED_SIZE, 185, javax.swing.GroupLayout.PREFERRED_SIZE))
                             .addGroup(jPanel2Layout.createSequentialGroup()
                                 .addComponent(jLabelDNI2)
@@ -301,6 +337,12 @@ public class jifFormAlumno extends javax.swing.JInternalFrame {
                     .addComponent(jButtLimpiar)))
         );
 
+        jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/emblem.png"))); // NOI18N
+
+        jLabel2.setFont(new java.awt.Font("Calibri", 1, 18)); // NOI18N
+        jLabel2.setForeground(new java.awt.Color(255, 255, 71));
+        jLabel2.setText("Universidad Grupo 6");
+
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
@@ -314,8 +356,15 @@ public class jifFormAlumno extends javax.swing.JInternalFrame {
                         .addGap(29, 29, 29)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jPanelBuscar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                .addContainerGap(173, Short.MAX_VALUE))
+                            .addGroup(jPanel1Layout.createSequentialGroup()
+                                .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(jLabel2)
+                                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                                        .addComponent(jLabel1)
+                                        .addGap(11, 11, 11)))))))
+                .addContainerGap(12, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -324,9 +373,14 @@ public class jifFormAlumno extends javax.swing.JInternalFrame {
                 .addComponent(jLabelTitulo)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jPanelBuscar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(12, Short.MAX_VALUE))
+                .addGap(18, 18, 18)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addComponent(jLabel1)
+                        .addGap(18, 18, 18)
+                        .addComponent(jLabel2)))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -364,13 +418,14 @@ public class jifFormAlumno extends javax.swing.JInternalFrame {
         int dia = jDCFechaNac.getCalendar().get(Calendar.DAY_OF_MONTH);
         int mes = jDCFechaNac.getCalendar().get(Calendar.MONTH);
         int anio = jDCFechaNac.getCalendar().get(Calendar.YEAR);
-        
+
         alumno.setDni(dni);
         alumno.setApellido(apellido);
         alumno.setNombre(nombre);
-        alumno.setFechaNacimiento(LocalDate.of(anio, mes, dia));
+        alumno.setFechaNacimiento(LocalDate.of(anio, mes + 1, dia));
         alumno.setActivo(activo);
         aData.guardarAlumno(alumno);
+
         jTxTFDNI.setText("");
         jTxTFApellido.setText("");
         jTxTFNombre.setText("");
@@ -380,16 +435,31 @@ public class jifFormAlumno extends javax.swing.JInternalFrame {
 
     private void jButtBuscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtBuscarActionPerformed
         Alumno a = aData.buscarAlumno(Integer.parseInt(jTxTFBuscarAlumno.getText()));
-        jTxTFDNI.setText(String.valueOf(a.getDni()));
-        jTxTFApellido.setText(a.getApellido());
-        jTxTFNombre.setText(a.getNombre());
-        jTxTFFechaNac.setText("");
-        jTxTFFechaNac.setText(a.getFechaNacimiento().toString());
+        if (a != null) {
+            jTxTFDNI.setText(String.valueOf(a.getDni()));
+            jTxTFApellido.setText(a.getApellido());
+            jTxTFNombre.setText(a.getNombre());
+            jTxTFFechaNac.setText("");
+            jTxTFFechaNac.setText(a.getFechaNacimiento().toString());
+        } else {
+            JOptionPane.showMessageDialog(null, "No se ha encontrado al alumno","Error",JOptionPane.ERROR_MESSAGE);
+        }
+
     }//GEN-LAST:event_jButtBuscarActionPerformed
 
     private void jButtActualizarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtActualizarActionPerformed
         Alumno a = aData.buscarAlumno(Integer.parseInt(jTxTFBuscarAlumno.getText()));
-        aData.actualizarAlumno(new Alumno(Integer.parseInt(jTxTFDNI.getText()), jTxTFApellido.getText(), jTxTFNombre.getText(), LocalDate.MIN, jCheckBoxActivo.areFocusTraversalKeysSet(1)), Integer.parseInt(jTxTFBuscarAlumno.getText()));
+        int dia = jDCFechaNac.getCalendar().get(Calendar.DAY_OF_MONTH);
+        int mes = jDCFechaNac.getCalendar().get(Calendar.MONTH);
+        int anio = jDCFechaNac.getCalendar().get(Calendar.YEAR);
+        a.setFechaNacimiento(LocalDate.of(anio, mes + 1, dia));
+        aData.actualizarAlumno(new Alumno(Integer.parseInt(jTxTFDNI.getText()), jTxTFApellido.getText(), jTxTFNombre.getText(), a.getFechaNacimiento(), jCheckBoxActivo.areFocusTraversalKeysSet(1)), Integer.parseInt(jTxTFBuscarAlumno.getText()));
+        
+        jTxTFDNI.setText("");
+        jTxTFApellido.setText("");
+        jTxTFNombre.setText("");
+        jTxTFFechaNac.setText("");
+        jDCFechaNac.setCalendar(null);
     }//GEN-LAST:event_jButtActualizarActionPerformed
 
     private void jDCFechaNacAncestorAdded(javax.swing.event.AncestorEvent evt) {//GEN-FIRST:event_jDCFechaNacAncestorAdded
@@ -397,8 +467,44 @@ public class jifFormAlumno extends javax.swing.JInternalFrame {
     }//GEN-LAST:event_jDCFechaNacAncestorAdded
 
     private void jTxTFFechaNacActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTxTFFechaNacActionPerformed
-        // TODO add your handling code here:
+        
     }//GEN-LAST:event_jTxTFFechaNacActionPerformed
+
+    private void jTxTFBuscarAlumnoKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jTxTFBuscarAlumnoKeyTyped
+        char c = evt.getKeyChar();
+        if (c < '0' || c > '9') {
+            evt.consume();
+        }
+    }//GEN-LAST:event_jTxTFBuscarAlumnoKeyTyped
+
+    private void jTxTFDNIKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jTxTFDNIKeyTyped
+        char c = evt.getKeyChar();
+        if (c < '0' || c > '9') {
+            evt.consume();
+        }
+    }//GEN-LAST:event_jTxTFDNIKeyTyped
+
+    private void jButtLimpiarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtLimpiarActionPerformed
+        jTxTFDNI.setText("");
+        jTxTFApellido.setText("");
+        jTxTFNombre.setText("");
+        jTxTFFechaNac.setText("");
+        jDCFechaNac.setCalendar(null);
+    }//GEN-LAST:event_jButtLimpiarActionPerformed
+
+    private void jTxTFBuscarAlumnoFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_jTxTFBuscarAlumnoFocusGained
+        jTxTFBuscarAlumno.setText("");
+    }//GEN-LAST:event_jTxTFBuscarAlumnoFocusGained
+
+    private void jButtBorrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtBorrarActionPerformed
+        int legajo = Integer.parseInt(jTxTFBuscarAlumno.getText());
+        aData.borrarAlumno(legajo);
+        jTxTFDNI.setText("");
+        jTxTFApellido.setText("");
+        jTxTFNombre.setText("");
+        jTxTFFechaNac.setText("");
+        jDCFechaNac.setCalendar(null);
+    }//GEN-LAST:event_jButtBorrarActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
@@ -409,6 +515,8 @@ public class jifFormAlumno extends javax.swing.JInternalFrame {
     private javax.swing.JButton jButtLimpiar;
     private javax.swing.JCheckBox jCheckBoxActivo;
     private com.toedter.calendar.JDateChooser jDCFechaNac;
+    private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabelActivo;
     private javax.swing.JLabel jLabelDNI;
     private javax.swing.JLabel jLabelDNI1;

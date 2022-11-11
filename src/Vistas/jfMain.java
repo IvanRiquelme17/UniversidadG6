@@ -35,6 +35,7 @@ public class jfMain extends javax.swing.JFrame {
         jBCargaNotas = new javax.swing.JButton();
         jBSalir = new javax.swing.JButton();
         jLabel1 = new javax.swing.JLabel();
+        jLabel2 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -44,7 +45,7 @@ public class jfMain extends javax.swing.JFrame {
         jDesktop.setLayout(jDesktopLayout);
         jDesktopLayout.setHorizontalGroup(
             jDesktopLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 745, Short.MAX_VALUE)
+            .addGap(0, 724, Short.MAX_VALUE)
         );
         jDesktopLayout.setVerticalGroup(
             jDesktopLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -58,6 +59,7 @@ public class jfMain extends javax.swing.JFrame {
         jBFormMateria.setBackground(new java.awt.Color(6, 115, 70));
         jBFormMateria.setFont(new java.awt.Font("Calibri", 1, 14)); // NOI18N
         jBFormMateria.setForeground(new java.awt.Color(255, 255, 255));
+        jBFormMateria.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/Materia.png"))); // NOI18N
         jBFormMateria.setText("Formulario Materias");
         jBFormMateria.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -68,6 +70,7 @@ public class jfMain extends javax.swing.JFrame {
         jBFormAlumno.setBackground(new java.awt.Color(6, 115, 70));
         jBFormAlumno.setFont(new java.awt.Font("Calibri", 1, 14)); // NOI18N
         jBFormAlumno.setForeground(new java.awt.Color(255, 255, 255));
+        jBFormAlumno.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/Alumno.png"))); // NOI18N
         jBFormAlumno.setText("Formulario Alumnos");
         jBFormAlumno.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -78,6 +81,7 @@ public class jfMain extends javax.swing.JFrame {
         jBFormInscrip.setBackground(new java.awt.Color(6, 115, 70));
         jBFormInscrip.setFont(new java.awt.Font("Calibri", 1, 14)); // NOI18N
         jBFormInscrip.setForeground(new java.awt.Color(255, 255, 255));
+        jBFormInscrip.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/Inscripcion.png"))); // NOI18N
         jBFormInscrip.setText("Formulario Inscripción");
         jBFormInscrip.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -88,6 +92,7 @@ public class jfMain extends javax.swing.JFrame {
         jBCargaNotas.setBackground(new java.awt.Color(6, 115, 70));
         jBCargaNotas.setFont(new java.awt.Font("Calibri", 1, 14)); // NOI18N
         jBCargaNotas.setForeground(new java.awt.Color(255, 255, 255));
+        jBCargaNotas.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/CargaNota.png"))); // NOI18N
         jBCargaNotas.setText("Carga de Notas");
         jBCargaNotas.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -98,6 +103,7 @@ public class jfMain extends javax.swing.JFrame {
         jBSalir.setBackground(new java.awt.Color(51, 68, 61));
         jBSalir.setFont(new java.awt.Font("Calibri", 1, 14)); // NOI18N
         jBSalir.setForeground(new java.awt.Color(255, 255, 255));
+        jBSalir.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/Salir.png"))); // NOI18N
         jBSalir.setText("Salir");
         jBSalir.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -109,26 +115,30 @@ public class jfMain extends javax.swing.JFrame {
         jLabel1.setForeground(new java.awt.Color(255, 255, 71));
         jLabel1.setText("Proyecto Transversal");
 
+        jLabel2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/emblem.png"))); // NOI18N
+
         javax.swing.GroupLayout jPanelPrincipalLayout = new javax.swing.GroupLayout(jPanelPrincipal);
         jPanelPrincipal.setLayout(jPanelPrincipalLayout);
         jPanelPrincipalLayout.setHorizontalGroup(
             jPanelPrincipalLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanelPrincipalLayout.createSequentialGroup()
+            .addGroup(jPanelPrincipalLayout.createSequentialGroup()
                 .addGap(15, 15, 15)
                 .addGroup(jPanelPrincipalLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addComponent(jBFormAlumno, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(jBFormMateria, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jBFormInscrip, javax.swing.GroupLayout.DEFAULT_SIZE, 169, Short.MAX_VALUE)
+                    .addComponent(jBFormInscrip, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(jBCargaNotas, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addGap(15, 15, 15))
             .addGroup(jPanelPrincipalLayout.createSequentialGroup()
-                .addGap(47, 47, 47)
-                .addComponent(jBSalir, javax.swing.GroupLayout.PREFERRED_SIZE, 98, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(43, 43, 43)
+                .addGroup(jPanelPrincipalLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(jLabel2)
+                    .addGroup(jPanelPrincipalLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addComponent(jLabel1)
+                        .addGroup(jPanelPrincipalLayout.createSequentialGroup()
+                            .addGap(8, 8, 8)
+                            .addComponent(jBSalir, javax.swing.GroupLayout.PREFERRED_SIZE, 98, javax.swing.GroupLayout.PREFERRED_SIZE))))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanelPrincipalLayout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(jLabel1)
-                .addGap(37, 37, 37))
         );
         jPanelPrincipalLayout.setVerticalGroup(
             jPanelPrincipalLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -141,11 +151,13 @@ public class jfMain extends javax.swing.JFrame {
                 .addComponent(jBFormInscrip, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(35, 35, 35)
                 .addComponent(jBCargaNotas, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 115, Short.MAX_VALUE)
+                .addGap(18, 18, 18)
+                .addComponent(jLabel2)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 17, Short.MAX_VALUE)
                 .addComponent(jBSalir, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(56, 56, 56)
+                .addGap(18, 18, 18)
                 .addComponent(jLabel1)
-                .addGap(16, 16, 16))
+                .addContainerGap())
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -167,7 +179,11 @@ public class jfMain extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jBCargaNotasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBCargaNotasActionPerformed
-        // TODO add your handling code here:
+        jDesktop.removeAll();
+        jDesktop.repaint();
+        jifCargaNotas formCargaNotas = new jifCargaNotas();
+        formCargaNotas.setVisible(true);
+        jDesktop.add(formCargaNotas);
     }//GEN-LAST:event_jBCargaNotasActionPerformed
 
     private void jBSalirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBSalirActionPerformed
@@ -241,6 +257,7 @@ public class jfMain extends javax.swing.JFrame {
     private javax.swing.JButton jBSalir;
     private javax.swing.JDesktopPane jDesktop;
     private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel2;
     private javax.swing.JPanel jPanelPrincipal;
     // End of variables declaration//GEN-END:variables
 }

@@ -11,8 +11,11 @@ import Data.NotaData;
 import java.sql.Connection;
 import java.util.ArrayList;
 import java.util.List;
+import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 import universidadg6.modelo.Alumno;
+import universidadg6.modelo.Materia;
+import universidadg6.modelo.Nota;
 
 /**
  *
@@ -25,10 +28,11 @@ public class jifCargaNotas extends javax.swing.JInternalFrame {
     NotaData nData = new NotaData();
     List<Alumno> listAlumno;
     private DefaultTableModel tabla;
+
     public jifCargaNotas() {
         initComponents();
-        llenarCombo();
         tabla = new DefaultTableModel();
+        llenarCombo();
         armarCabeceraTabla();
     }
 
@@ -112,14 +116,14 @@ public class jifCargaNotas extends javax.swing.JInternalFrame {
                 {null, null, null}
             },
             new String [] {
-                "ID", "Nombre", "Anio"
+                "ID", "Nombre", "Nota"
             }
         ) {
             Class[] types = new Class [] {
-                java.lang.Integer.class, java.lang.String.class, java.lang.Integer.class
+                java.lang.Integer.class, java.lang.String.class, java.lang.Double.class
             };
             boolean[] canEdit = new boolean [] {
-                false, false, false
+                false, false, true
             };
 
             public Class getColumnClass(int columnIndex) {
@@ -130,7 +134,13 @@ public class jifCargaNotas extends javax.swing.JInternalFrame {
                 return canEdit [columnIndex];
             }
         });
+        jTableMaterias.getTableHeader().setReorderingAllowed(false);
         jScrollPane1.setViewportView(jTableMaterias);
+        if (jTableMaterias.getColumnModel().getColumnCount() > 0) {
+            jTableMaterias.getColumnModel().getColumn(0).setResizable(false);
+            jTableMaterias.getColumnModel().getColumn(1).setResizable(false);
+            jTableMaterias.getColumnModel().getColumn(2).setResizable(false);
+        }
 
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
@@ -151,6 +161,7 @@ public class jifCargaNotas extends javax.swing.JInternalFrame {
 
         jButtGuardar.setBackground(new java.awt.Color(6, 115, 70));
         jButtGuardar.setForeground(new java.awt.Color(255, 255, 255));
+        jButtGuardar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/Guardar.png"))); // NOI18N
         jButtGuardar.setText("Guardar");
         jButtGuardar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -161,6 +172,11 @@ public class jifCargaNotas extends javax.swing.JInternalFrame {
         jButtSalir.setBackground(new java.awt.Color(6, 115, 70));
         jButtSalir.setForeground(new java.awt.Color(255, 255, 255));
         jButtSalir.setText("Salir");
+        jButtSalir.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButtSalirActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -219,12 +235,38 @@ public class jifCargaNotas extends javax.swing.JInternalFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jComboNotaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jComboNotaActionPerformed
+        cargarMateriasInscriptas();
 
     }//GEN-LAST:event_jComboNotaActionPerformed
 
     private void jButtGuardarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtGuardarActionPerformed
-        
+        int filasSelec = jTableMaterias.getSelectedRow();
+        Alumno a = (Alumno) jComboNota.getSelectedItem();
+
+        try {
+            if (filasSelec != -1 && a != null) {
+                int idMateria = (int) tabla.getValueAt(filasSelec, 0);
+                String nota = (String) tabla.getValueAt(filasSelec, 2);
+                double notaA = Double.parseDouble(nota);
+                if (notaA <= 10 && notaA >= 0) {
+                    nData.actualizarNota(a.getId_alumno(), idMateria, notaA);
+                } else {
+                    JOptionPane.showMessageDialog(null, "Nota errónea. Coloque nota del 0 al 10", "Error", JOptionPane.ERROR_MESSAGE);
+                }
+
+            } else {
+                JOptionPane.showMessageDialog(this, "Seleccione alguna/s materia/s");
+            }
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null, "Presione ENTER dentro del campo NOTA.", "Error", JOptionPane.ERROR_MESSAGE);
+
+        }
+
     }//GEN-LAST:event_jButtGuardarActionPerformed
+
+    private void jButtSalirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtSalirActionPerformed
+        dispose();
+    }//GEN-LAST:event_jButtSalirActionPerformed
 
     private void llenarCombo() {
         listAlumno = aData.obtenerAlumnos();
@@ -232,17 +274,53 @@ public class jifCargaNotas extends javax.swing.JInternalFrame {
             jComboNota.addItem(alumno);
         }
     }
-    
+
+    private void actualizarCombo() {
+        int selec = jComboNota.getSelectedIndex();
+
+    }
+
     private void armarCabeceraTabla() {
         ArrayList<Object> columnas = new ArrayList();
         columnas.add("Código");
         columnas.add("Nombre");
-        columnas.add("Año");
+        columnas.add("Nota");
 
         for (Object aux : columnas) {
             tabla.addColumn(aux);
         }
         jTableMaterias.setModel(tabla);
+    }
+
+    private void borrarFilasTabla() {
+        if (tabla != null) {
+            int aux = tabla.getRowCount() - 1;
+            for (int i = aux; i >= 0; i--) {
+                tabla.removeRow(i);
+            }
+        }
+    }
+
+    private void cargarMateriasInscriptas() {
+        borrarFilasTabla();
+
+        Alumno aSelec = (Alumno) jComboNota.getSelectedItem();
+        if (aSelec != null) {
+            ArrayList<Materia> listaMateriaIns = (ArrayList) nData.obtenerMateriasInscriptas(aSelec.getId_alumno());
+
+            for (Materia m : listaMateriaIns) {
+                Nota n = nData.obtenerInscripcion(aSelec.getId_alumno(), m.getId_materia());
+                Object[] filas = new Object[3];
+                filas[0] = m.getId_materia();
+                filas[1] = m.getNombre();
+                filas[2] = n.getNotaAlumno();
+
+                tabla.addRow(filas);
+            }
+            jTableMaterias.setModel(tabla);
+        } else {
+            JOptionPane.showMessageDialog(this, "Seleccione un alumno");
+        }
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

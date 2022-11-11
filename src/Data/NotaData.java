@@ -25,17 +25,6 @@ public class NotaData {
         this.mData = new MateriaData(con);
     }
 
-    private Alumno regenerarAlumno(int id) {
-        //Permite reestructurar un objeto Alumno desde un id
-        AlumnoData aData = new AlumnoData(con);
-        return aData.buscarAlumno(id);
-    }
-
-    private Materia regenerarMateria(int id) {
-        //Permite reestructurar un objeto Alumno desde un id
-        MateriaData mData = new MateriaData(con);
-        return mData.buscarMateria(id);
-    }
 
     public void guardarInscripcion(Nota i) {
         String query = "INSERT INTO nota (id_alumno, id_materia, notaAlumno) VALUES (?, ?, ?)";

@@ -69,6 +69,7 @@ public class jifInscripcion extends javax.swing.JInternalFrame {
 
         jButtInscribir.setBackground(new java.awt.Color(6, 115, 70));
         jButtInscribir.setForeground(new java.awt.Color(255, 255, 255));
+        jButtInscribir.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/cheque.png"))); // NOI18N
         jButtInscribir.setText("Inscribir");
         jButtInscribir.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -78,6 +79,7 @@ public class jifInscripcion extends javax.swing.JInternalFrame {
 
         jButtAnularInscrip.setBackground(new java.awt.Color(6, 115, 70));
         jButtAnularInscrip.setForeground(new java.awt.Color(255, 255, 255));
+        jButtAnularInscrip.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/cerrar.png"))); // NOI18N
         jButtAnularInscrip.setText("Anular Inscripción");
         jButtAnularInscrip.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -88,6 +90,11 @@ public class jifInscripcion extends javax.swing.JInternalFrame {
         jButtSalir.setBackground(new java.awt.Color(6, 115, 70));
         jButtSalir.setForeground(new java.awt.Color(255, 255, 255));
         jButtSalir.setText("Salir");
+        jButtSalir.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButtSalirActionPerformed(evt);
+            }
+        });
 
         jPanel2.setBackground(new java.awt.Color(9, 96, 62));
         jPanel2.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Listado de Materias", javax.swing.border.TitledBorder.CENTER, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Calibri", 1, 14), new java.awt.Color(255, 255, 71))); // NOI18N
@@ -311,18 +318,21 @@ public class jifInscripcion extends javax.swing.JInternalFrame {
     }//GEN-LAST:event_jButtInscribirActionPerformed
 
     private void jButtAnularInscripActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtAnularInscripActionPerformed
-        int filasSelec[] = jTableMaterias.getSelectedRows();
+        int filasSelec = jTableMaterias.getSelectedRow();
         Alumno a = (Alumno) jComboInscripcion.getSelectedItem();
-        for (int i : filasSelec) {
-            if (filasSelec[i] != -1 && a != null) {
-                int idMateria = (int) tabla.getValueAt(filasSelec[i], 0);
-                nData.borrarInscripcion(a.getId_alumno(), idMateria);
-                borrarFilasTabla();
-            } else {
-                JOptionPane.showMessageDialog(this, "Seleccione alguna/s materia/s");
-            }
+
+        if (filasSelec != -1 && a != null) {
+            int idMateria = (int) tabla.getValueAt(filasSelec, 0);
+            nData.borrarInscripcion(a.getId_alumno(), idMateria);
+            borrarFilasTabla();
+        } else {
+            JOptionPane.showMessageDialog(this, "Seleccione alguna/s materia/s");
         }
     }//GEN-LAST:event_jButtAnularInscripActionPerformed
+
+    private void jButtSalirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtSalirActionPerformed
+        dispose();
+    }//GEN-LAST:event_jButtSalirActionPerformed
 
     private void llenarCombo() {
         listAlumno = aData.obtenerAlumnos();
@@ -368,7 +378,7 @@ public class jifInscripcion extends javax.swing.JInternalFrame {
         }
     }
 
-    private void armarCabeceraTabla() {
+     private void armarCabeceraTabla() {
         ArrayList<Object> columnas = new ArrayList();
         columnas.add("Código");
         columnas.add("Nombre");

@@ -8,6 +8,7 @@ package Vistas;
 import Data.Conexion;
 import Data.MateriaData;
 import java.sql.Connection;
+import javax.swing.JOptionPane;
 import universidadg6.modelo.Materia;
 
 /**
@@ -49,6 +50,9 @@ public class jifFormMateria extends javax.swing.JInternalFrame {
         jButtActualizar = new javax.swing.JButton();
         jButtBorrar = new javax.swing.JButton();
         jButtLimpiar = new javax.swing.JButton();
+        jLabel1 = new javax.swing.JLabel();
+        jLabel2 = new javax.swing.JLabel();
+        jLabel3 = new javax.swing.JLabel();
 
         jPanel1.setBackground(new java.awt.Color(9, 96, 62));
         jPanel1.setForeground(new java.awt.Color(9, 96, 62));
@@ -71,9 +75,20 @@ public class jifFormMateria extends javax.swing.JInternalFrame {
         jTxTFBuscarMateria.setFont(new java.awt.Font("Calibri", 0, 14)); // NOI18N
         jTxTFBuscarMateria.setForeground(new java.awt.Color(255, 255, 109));
         jTxTFBuscarMateria.setText("Buscar Materia...");
+        jTxTFBuscarMateria.addFocusListener(new java.awt.event.FocusAdapter() {
+            public void focusGained(java.awt.event.FocusEvent evt) {
+                jTxTFBuscarMateriaFocusGained(evt);
+            }
+        });
+        jTxTFBuscarMateria.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                jTxTFBuscarMateriaKeyTyped(evt);
+            }
+        });
 
         jButtBuscar.setBackground(new java.awt.Color(6, 115, 70));
         jButtBuscar.setForeground(new java.awt.Color(255, 255, 255));
+        jButtBuscar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/Buscar (3).png"))); // NOI18N
         jButtBuscar.setText("Buscar");
         jButtBuscar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -89,7 +104,7 @@ public class jifFormMateria extends javax.swing.JInternalFrame {
                 .addComponent(jLabelLegajo1)
                 .addGap(18, 18, 18)
                 .addComponent(jTxTFBuscarMateria, javax.swing.GroupLayout.PREFERRED_SIZE, 185, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 24, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(jButtBuscar)
                 .addContainerGap())
         );
@@ -132,6 +147,11 @@ public class jifFormMateria extends javax.swing.JInternalFrame {
                 jTxTFAnioActionPerformed(evt);
             }
         });
+        jTxTFAnio.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                jTxTFAnioKeyTyped(evt);
+            }
+        });
 
         jLabelAnio.setFont(new java.awt.Font("Calibri", 1, 18)); // NOI18N
         jLabelAnio.setForeground(new java.awt.Color(255, 255, 71));
@@ -148,6 +168,7 @@ public class jifFormMateria extends javax.swing.JInternalFrame {
         jButtGuardar.setBackground(new java.awt.Color(6, 115, 70));
         jButtGuardar.setFont(new java.awt.Font("Calibri", 1, 12)); // NOI18N
         jButtGuardar.setForeground(new java.awt.Color(255, 255, 255));
+        jButtGuardar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/Guardar.png"))); // NOI18N
         jButtGuardar.setText("Guardar");
         jButtGuardar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -158,6 +179,7 @@ public class jifFormMateria extends javax.swing.JInternalFrame {
         jButtActualizar.setBackground(new java.awt.Color(6, 115, 70));
         jButtActualizar.setFont(new java.awt.Font("Calibri", 1, 12)); // NOI18N
         jButtActualizar.setForeground(new java.awt.Color(255, 255, 255));
+        jButtActualizar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/Actualizar.png"))); // NOI18N
         jButtActualizar.setText("Actualizar");
         jButtActualizar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -168,6 +190,7 @@ public class jifFormMateria extends javax.swing.JInternalFrame {
         jButtBorrar.setBackground(new java.awt.Color(6, 115, 70));
         jButtBorrar.setFont(new java.awt.Font("Calibri", 1, 12)); // NOI18N
         jButtBorrar.setForeground(new java.awt.Color(255, 255, 255));
+        jButtBorrar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/borrar.png"))); // NOI18N
         jButtBorrar.setText("Borrar");
         jButtBorrar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -244,6 +267,12 @@ public class jifFormMateria extends javax.swing.JInternalFrame {
                         .addGap(0, 0, Short.MAX_VALUE))))
         );
 
+        jLabel2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/emblem.png"))); // NOI18N
+
+        jLabel3.setFont(new java.awt.Font("Calibri", 1, 18)); // NOI18N
+        jLabel3.setForeground(new java.awt.Color(255, 255, 71));
+        jLabel3.setText("Universidad Grupo 6");
+
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
@@ -258,7 +287,17 @@ public class jifFormMateria extends javax.swing.JInternalFrame {
                         .addGroup(jPanel1Layout.createSequentialGroup()
                             .addGap(64, 64, 64)
                             .addComponent(jPanelBuscar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                .addContainerGap(178, Short.MAX_VALUE))
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGap(45, 45, 45)
+                        .addComponent(jLabel2)
+                        .addGap(18, 18, 18)
+                        .addComponent(jLabel1)
+                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(jLabel3)
+                        .addGap(16, 16, 16))))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -268,8 +307,18 @@ public class jifFormMateria extends javax.swing.JInternalFrame {
                 .addGap(18, 18, 18)
                 .addComponent(jPanelBuscar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
-                .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap())
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                        .addComponent(jLabel1)
+                        .addGap(216, 216, 216))
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addGroup(jPanel1Layout.createSequentialGroup()
+                                .addComponent(jLabel2)
+                                .addGap(18, 18, 18)
+                                .addComponent(jLabel3)))
+                        .addContainerGap())))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -287,12 +336,18 @@ public class jifFormMateria extends javax.swing.JInternalFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jButtBuscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtBuscarActionPerformed
+
         int codigo = Integer.parseInt(jTxTFBuscarMateria.getText());
         Materia m = mData.buscarMateria(codigo);
-        mData.buscarMateria(codigo);
-        jTxTFNombre.setText(m.getNombre());
-        jTxTFAnio.setText(String.valueOf(m.getAnio()));
-        jCheckBoxActivo.setSelected(m.isActivo());
+        if (m != null) {
+            mData.buscarMateria(codigo);
+            jTxTFNombre.setText(m.getNombre());
+            jTxTFAnio.setText(String.valueOf(m.getAnio()));
+            jCheckBoxActivo.setSelected(m.isActivo());
+        } else {
+            JOptionPane.showMessageDialog(null, "No se ha encontrado la materia","Error",JOptionPane.ERROR_MESSAGE);
+        }
+
     }//GEN-LAST:event_jButtBuscarActionPerformed
 
     private void jTxTFNombreActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTxTFNombreActionPerformed
@@ -306,7 +361,8 @@ public class jifFormMateria extends javax.swing.JInternalFrame {
     private void jButtGuardarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtGuardarActionPerformed
         int anio = Integer.parseInt(jTxTFAnio.getText());
         String nombreMateria = jTxTFNombre.getText();
-        Materia m = new Materia(nombreMateria, anio, true);
+        boolean activo = jCheckBoxActivo.isSelected();
+        Materia m = new Materia(nombreMateria, anio, activo);
         mData.guardarMateria(m);
         jTxTFBuscarMateria.setText("");
         jTxTFNombre.setText("");
@@ -339,6 +395,24 @@ public class jifFormMateria extends javax.swing.JInternalFrame {
         jTxTFAnio.setText("");
     }//GEN-LAST:event_jButtLimpiarActionPerformed
 
+    private void jTxTFBuscarMateriaKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jTxTFBuscarMateriaKeyTyped
+        char c = evt.getKeyChar();
+        if (c < '0' || c > '9') {
+            evt.consume();
+        }
+    }//GEN-LAST:event_jTxTFBuscarMateriaKeyTyped
+
+    private void jTxTFAnioKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jTxTFAnioKeyTyped
+        char c = evt.getKeyChar();
+        if (c < '0' || c > '9') {
+            evt.consume();
+        }
+    }//GEN-LAST:event_jTxTFAnioKeyTyped
+
+    private void jTxTFBuscarMateriaFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_jTxTFBuscarMateriaFocusGained
+        jTxTFBuscarMateria.setText("");
+    }//GEN-LAST:event_jTxTFBuscarMateriaFocusGained
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jButtActualizar;
@@ -347,6 +421,9 @@ public class jifFormMateria extends javax.swing.JInternalFrame {
     private javax.swing.JButton jButtGuardar;
     private javax.swing.JButton jButtLimpiar;
     private javax.swing.JCheckBox jCheckBoxActivo;
+    private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel2;
+    private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabelActivo;
     private javax.swing.JLabel jLabelAnio;
     private javax.swing.JLabel jLabelLegajo1;
