@@ -446,6 +446,7 @@ public class jifFormAlumno extends javax.swing.JInternalFrame {
                 jTxTFApellido.setText(a.getApellido());
                 jTxTFNombre.setText(a.getNombre());
                 jTxTFFechaNac.setText("");
+                jCheckBoxActivo.setSelected(a.isActivo());
                 jTxTFFechaNac.setText(a.getFechaNacimiento().toString());
             } else {
                 JOptionPane.showMessageDialog(null, "No se ha encontrado al alumno", "Error", JOptionPane.ERROR_MESSAGE);
