@@ -376,23 +376,33 @@ public class jifFormMateria extends javax.swing.JInternalFrame {
     }//GEN-LAST:event_jButtGuardarActionPerformed
 
     private void jButtActualizarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtActualizarActionPerformed
-        int id = Integer.parseInt(jTxTFBuscarMateria.getText());
-        String nombre = jTxTFNombre.getText();
-        int anio = Integer.parseInt(jTxTFAnio.getText());
-        boolean estado = jCheckBoxActivo.isSelected();
-        Materia m = new Materia(id, nombre, anio, estado);
-        mData.actualizarMateria(m, Integer.parseInt(jTxTFBuscarMateria.getText()));
-        jTxTFBuscarMateria.setText("");
-        jTxTFNombre.setText("");
-        jTxTFAnio.setText("");
+        if (jTxTFBuscarMateria.getText().equals("")) {
+            JOptionPane.showMessageDialog(null, "Ingrese el código de materia a actualizar", "Error", JOptionPane.ERROR_MESSAGE);
+        } else if (jTxTFAnio.getText().equals("") || jTxTFNombre.getText().equals("")) {
+            JOptionPane.showMessageDialog(null, "Rellene todos los campos", "Error", JOptionPane.ERROR_MESSAGE);
+        } else {
+            int id = Integer.parseInt(jTxTFBuscarMateria.getText());
+            String nombre = jTxTFNombre.getText();
+            int anio = Integer.parseInt(jTxTFAnio.getText());
+            boolean estado = jCheckBoxActivo.isSelected();
+            Materia m = new Materia(id, nombre, anio, estado);
+            mData.actualizarMateria(m, Integer.parseInt(jTxTFBuscarMateria.getText()));
+            jTxTFBuscarMateria.setText("");
+            jTxTFNombre.setText("");
+            jTxTFAnio.setText("");
+        }
     }//GEN-LAST:event_jButtActualizarActionPerformed
 
     private void jButtBorrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtBorrarActionPerformed
-        int codigo = Integer.parseInt(jTxTFBuscarMateria.getText());
-        mData.borrarMateria(codigo);
-        jTxTFBuscarMateria.setText("");
-        jTxTFNombre.setText("");
-        jTxTFAnio.setText("");
+        if (jTxTFBuscarMateria.getText().equals("")) {
+            JOptionPane.showMessageDialog(null, "Ingrese el código de materia a borrar", "Error", JOptionPane.ERROR_MESSAGE);
+        } else {
+            int codigo = Integer.parseInt(jTxTFBuscarMateria.getText());
+            mData.borrarMateria(codigo);
+            jTxTFBuscarMateria.setText("");
+            jTxTFNombre.setText("");
+            jTxTFAnio.setText("");
+        }
     }//GEN-LAST:event_jButtBorrarActionPerformed
 
     private void jButtLimpiarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtLimpiarActionPerformed

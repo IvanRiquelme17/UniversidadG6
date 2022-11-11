@@ -459,16 +459,21 @@ public class jifFormAlumno extends javax.swing.JInternalFrame {
     }//GEN-LAST:event_jButtBuscarActionPerformed
 
     private void jButtActualizarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtActualizarActionPerformed
-        Alumno a = aData.buscarAlumno(Integer.parseInt(jTxTFBuscarAlumno.getText()));
-        if (jDCFechaNac.getCalendar() != null) {
-            int dia = jDCFechaNac.getCalendar().get(Calendar.DAY_OF_MONTH);
-            int mes = jDCFechaNac.getCalendar().get(Calendar.MONTH);
-            int anio = jDCFechaNac.getCalendar().get(Calendar.YEAR);
-            a.setFechaNacimiento(LocalDate.of(anio, mes + 1, dia));
+        if (jTxTFBuscarAlumno.getText().equals("")) {
+            JOptionPane.showMessageDialog(null, "Ingrese el legajo del alumno a actualizar.", "Error", JOptionPane.ERROR_MESSAGE);
+        } else if (jTxTFDNI.getText().equals("") || jTxTFApellido.getText().equals("") || jTxTFNombre.getText().equals("")) {
+            JOptionPane.showMessageDialog(null, "Rellene todos los campos.", "Error", JOptionPane.ERROR_MESSAGE);
+        } else {
+            Alumno a = aData.buscarAlumno(Integer.parseInt(jTxTFBuscarAlumno.getText()));
+            if (jDCFechaNac.getCalendar() != null) {
+                int dia = jDCFechaNac.getCalendar().get(Calendar.DAY_OF_MONTH);
+                int mes = jDCFechaNac.getCalendar().get(Calendar.MONTH);
+                int anio = jDCFechaNac.getCalendar().get(Calendar.YEAR);
+                a.setFechaNacimiento(LocalDate.of(anio, mes + 1, dia));
+            }
+
+            aData.actualizarAlumno(new Alumno(Integer.parseInt(jTxTFDNI.getText()), jTxTFApellido.getText(), jTxTFNombre.getText(), a.getFechaNacimiento(), jCheckBoxActivo.areFocusTraversalKeysSet(1)), Integer.parseInt(jTxTFBuscarAlumno.getText()));
         }
-
-        aData.actualizarAlumno(new Alumno(Integer.parseInt(jTxTFDNI.getText()), jTxTFApellido.getText(), jTxTFNombre.getText(), a.getFechaNacimiento(), jCheckBoxActivo.areFocusTraversalKeysSet(1)), Integer.parseInt(jTxTFBuscarAlumno.getText()));
-
         jTxTFDNI.setText("");
         jTxTFApellido.setText("");
         jTxTFNombre.setText("");
@@ -511,13 +516,17 @@ public class jifFormAlumno extends javax.swing.JInternalFrame {
     }//GEN-LAST:event_jTxTFBuscarAlumnoFocusGained
 
     private void jButtBorrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtBorrarActionPerformed
-        int legajo = Integer.parseInt(jTxTFBuscarAlumno.getText());
-        aData.borrarAlumno(legajo);
-        jTxTFDNI.setText("");
-        jTxTFApellido.setText("");
-        jTxTFNombre.setText("");
-        jTxTFFechaNac.setText("");
-        jDCFechaNac.setCalendar(null);
+        if (jTxTFBuscarAlumno.getText().equals("")) {
+            JOptionPane.showMessageDialog(null, "Ingrese el legajo del alumno a borrar.", "Error", JOptionPane.ERROR_MESSAGE);
+        } else {
+            int legajo = Integer.parseInt(jTxTFBuscarAlumno.getText());
+            aData.borrarAlumno(legajo);
+            jTxTFDNI.setText("");
+            jTxTFApellido.setText("");
+            jTxTFNombre.setText("");
+            jTxTFFechaNac.setText("");
+            jDCFechaNac.setCalendar(null);
+        }
     }//GEN-LAST:event_jButtBorrarActionPerformed
 
 
