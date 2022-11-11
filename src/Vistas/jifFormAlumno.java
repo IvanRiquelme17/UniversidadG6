@@ -95,7 +95,7 @@ public class jifFormAlumno extends javax.swing.JInternalFrame {
 
         jButtBuscar.setBackground(new java.awt.Color(6, 115, 70));
         jButtBuscar.setForeground(new java.awt.Color(255, 255, 255));
-        jButtBuscar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/Buscar (3).png"))); // NOI18N
+        jButtBuscar.setIcon(new javax.swing.ImageIcon("C:\\Users\\Martin\\Documents\\GitHub\\UniversidadG6\\src\\images\\Buscar (3).png")); // NOI18N
         jButtBuscar.setText("Buscar");
         jButtBuscar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -192,7 +192,7 @@ public class jifFormAlumno extends javax.swing.JInternalFrame {
         jButtGuardar.setBackground(new java.awt.Color(6, 115, 70));
         jButtGuardar.setFont(new java.awt.Font("Calibri", 1, 12)); // NOI18N
         jButtGuardar.setForeground(new java.awt.Color(255, 255, 255));
-        jButtGuardar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/Guardar.png"))); // NOI18N
+        jButtGuardar.setIcon(new javax.swing.ImageIcon("C:\\Users\\Martin\\Documents\\GitHub\\UniversidadG6\\src\\images\\Guardar.png")); // NOI18N
         jButtGuardar.setText("Guardar");
         jButtGuardar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -203,7 +203,7 @@ public class jifFormAlumno extends javax.swing.JInternalFrame {
         jButtActualizar.setBackground(new java.awt.Color(6, 115, 70));
         jButtActualizar.setFont(new java.awt.Font("Calibri", 1, 12)); // NOI18N
         jButtActualizar.setForeground(new java.awt.Color(255, 255, 255));
-        jButtActualizar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/Actualizar.png"))); // NOI18N
+        jButtActualizar.setIcon(new javax.swing.ImageIcon("C:\\Users\\Martin\\Documents\\GitHub\\UniversidadG6\\src\\images\\Actualizar.png")); // NOI18N
         jButtActualizar.setText("Actualizar");
         jButtActualizar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -214,7 +214,7 @@ public class jifFormAlumno extends javax.swing.JInternalFrame {
         jButtBorrar.setBackground(new java.awt.Color(6, 115, 70));
         jButtBorrar.setFont(new java.awt.Font("Calibri", 1, 12)); // NOI18N
         jButtBorrar.setForeground(new java.awt.Color(255, 255, 255));
-        jButtBorrar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/borrar.png"))); // NOI18N
+        jButtBorrar.setIcon(new javax.swing.ImageIcon("C:\\Users\\Martin\\Documents\\GitHub\\UniversidadG6\\src\\images\\borrar.png")); // NOI18N
         jButtBorrar.setText("Borrar");
         jButtBorrar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -337,7 +337,7 @@ public class jifFormAlumno extends javax.swing.JInternalFrame {
                     .addComponent(jButtLimpiar)))
         );
 
-        jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/emblem.png"))); // NOI18N
+        jLabel1.setIcon(new javax.swing.ImageIcon("C:\\Users\\Martin\\Documents\\GitHub\\UniversidadG6\\src\\images\\emblem.png")); // NOI18N
 
         jLabel2.setFont(new java.awt.Font("Calibri", 1, 18)); // NOI18N
         jLabel2.setForeground(new java.awt.Color(255, 255, 71));
@@ -364,7 +364,7 @@ public class jifFormAlumno extends javax.swing.JInternalFrame {
                                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
                                         .addComponent(jLabel1)
                                         .addGap(11, 11, 11)))))))
-                .addContainerGap(12, Short.MAX_VALUE))
+                .addContainerGap(61, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
