@@ -410,23 +410,27 @@ public class jifFormAlumno extends javax.swing.JInternalFrame {
     }//GEN-LAST:event_jTxTFNombreActionPerformed
 
     private void jButtGuardarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtGuardarActionPerformed
-        Alumno alumno = new Alumno();
-        long dni = Long.parseLong(jTxTFDNI.getText());
-        String apellido = jTxTFApellido.getText();
-        String nombre = jTxTFNombre.getText();
-        boolean activo = jCheckBoxActivo.isSelected();
-        if (jDCFechaNac.getCalendar() != null) {
-            int dia = jDCFechaNac.getCalendar().get(Calendar.DAY_OF_MONTH);
-            int mes = jDCFechaNac.getCalendar().get(Calendar.MONTH);
-            int anio = jDCFechaNac.getCalendar().get(Calendar.YEAR);
-            alumno.setFechaNacimiento(LocalDate.of(anio, mes + 1, dia));
-            alumno.setDni(dni);
-            alumno.setApellido(apellido);
-            alumno.setNombre(nombre);
-            alumno.setActivo(activo);
-            aData.guardarAlumno(alumno);
-        } else {
+        if (jTxTFDNI.getText().equals("") || jTxTFApellido.getText().equals("") || jTxTFNombre.getText().equals("")) {
             JOptionPane.showMessageDialog(null, "Rellene todos los campos.", "Error", JOptionPane.ERROR_MESSAGE);
+        } else {
+            Alumno alumno = new Alumno();
+            long dni = Long.parseLong(jTxTFDNI.getText());
+            String apellido = jTxTFApellido.getText();
+            String nombre = jTxTFNombre.getText();
+            boolean activo = jCheckBoxActivo.isSelected();
+            if (jDCFechaNac.getCalendar() != null) {
+                int dia = jDCFechaNac.getCalendar().get(Calendar.DAY_OF_MONTH);
+                int mes = jDCFechaNac.getCalendar().get(Calendar.MONTH);
+                int anio = jDCFechaNac.getCalendar().get(Calendar.YEAR);
+                alumno.setFechaNacimiento(LocalDate.of(anio, mes + 1, dia));
+                alumno.setDni(dni);
+                alumno.setApellido(apellido);
+                alumno.setNombre(nombre);
+                alumno.setActivo(activo);
+                aData.guardarAlumno(alumno);
+            } else {
+                JOptionPane.showMessageDialog(null, "Rellene todos los campos.", "Error", JOptionPane.ERROR_MESSAGE);
+            }
         }
 
         jTxTFDNI.setText("");

@@ -361,14 +361,18 @@ public class jifFormMateria extends javax.swing.JInternalFrame {
     }//GEN-LAST:event_jTxTFAnioActionPerformed
 
     private void jButtGuardarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtGuardarActionPerformed
-        int anio = Integer.parseInt(jTxTFAnio.getText());
-        String nombreMateria = jTxTFNombre.getText();
-        boolean activo = jCheckBoxActivo.isSelected();
-        Materia m = new Materia(nombreMateria, anio, activo);
-        mData.guardarMateria(m);
-        jTxTFBuscarMateria.setText("");
-        jTxTFNombre.setText("");
-        jTxTFAnio.setText("");
+        if (jTxTFAnio.getText().equals("") || jTxTFNombre.getText().equals("")) {
+            JOptionPane.showMessageDialog(null, "Rellene todos los campos", "Error", JOptionPane.ERROR_MESSAGE);
+        } else {
+            int anio = Integer.parseInt(jTxTFAnio.getText());
+            String nombreMateria = jTxTFNombre.getText();
+            boolean activo = jCheckBoxActivo.isSelected();
+            Materia m = new Materia(nombreMateria, anio, activo);
+            mData.guardarMateria(m);
+            jTxTFBuscarMateria.setText("");
+            jTxTFNombre.setText("");
+            jTxTFAnio.setText("");
+        }
     }//GEN-LAST:event_jButtGuardarActionPerformed
 
     private void jButtActualizarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtActualizarActionPerformed

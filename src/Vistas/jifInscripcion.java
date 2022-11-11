@@ -311,6 +311,8 @@ public class jifInscripcion extends javax.swing.JInternalFrame {
             Nota n = new Nota(a, m, -1);
             nData.guardarInscripcion(n);
             borrarFilasTabla();
+            jRButtInscrip.setSelected(false);
+            jRButtNoInscrip.setSelected(false);
         } else {
             JOptionPane.showMessageDialog(this, "Seleccione alguna/s materia/s");
         }
@@ -325,6 +327,8 @@ public class jifInscripcion extends javax.swing.JInternalFrame {
             int idMateria = (int) tabla.getValueAt(filasSelec, 0);
             nData.borrarInscripcion(a.getId_alumno(), idMateria);
             borrarFilasTabla();
+            jRButtInscrip.setSelected(false);
+            jRButtNoInscrip.setSelected(false);
         } else {
             JOptionPane.showMessageDialog(this, "Seleccione alguna/s materia/s");
         }
@@ -378,7 +382,7 @@ public class jifInscripcion extends javax.swing.JInternalFrame {
         }
     }
 
-     private void armarCabeceraTabla() {
+    private void armarCabeceraTabla() {
         ArrayList<Object> columnas = new ArrayList();
         columnas.add("Código");
         columnas.add("Nombre");
