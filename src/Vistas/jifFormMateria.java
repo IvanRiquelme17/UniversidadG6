@@ -336,18 +336,20 @@ public class jifFormMateria extends javax.swing.JInternalFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jButtBuscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtBuscarActionPerformed
-
-        int codigo = Integer.parseInt(jTxTFBuscarMateria.getText());
-        Materia m = mData.buscarMateria(codigo);
-        if (m != null) {
-            mData.buscarMateria(codigo);
-            jTxTFNombre.setText(m.getNombre());
-            jTxTFAnio.setText(String.valueOf(m.getAnio()));
-            jCheckBoxActivo.setSelected(m.isActivo());
+        if (jTxTFBuscarMateria.getText().equals("")) {
+            JOptionPane.showMessageDialog(null, "Ingrese un código de materia", "Error", JOptionPane.ERROR_MESSAGE);
         } else {
-            JOptionPane.showMessageDialog(null, "No se ha encontrado la materia","Error",JOptionPane.ERROR_MESSAGE);
+            int codigo = Integer.parseInt(jTxTFBuscarMateria.getText());
+            Materia m = mData.buscarMateria(codigo);
+            if (m != null) {
+                mData.buscarMateria(codigo);
+                jTxTFNombre.setText(m.getNombre());
+                jTxTFAnio.setText(String.valueOf(m.getAnio()));
+                jCheckBoxActivo.setSelected(m.isActivo());
+            } else {
+                JOptionPane.showMessageDialog(null, "No se ha encontrado la materia", "Error", JOptionPane.ERROR_MESSAGE);
+            }
         }
-
     }//GEN-LAST:event_jButtBuscarActionPerformed
 
     private void jTxTFNombreActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTxTFNombreActionPerformed

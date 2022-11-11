@@ -437,17 +437,20 @@ public class jifFormAlumno extends javax.swing.JInternalFrame {
     }//GEN-LAST:event_jButtGuardarActionPerformed
 
     private void jButtBuscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtBuscarActionPerformed
-        Alumno a = aData.buscarAlumno(Integer.parseInt(jTxTFBuscarAlumno.getText()));
-        if (a != null) {
-            jTxTFDNI.setText(String.valueOf(a.getDni()));
-            jTxTFApellido.setText(a.getApellido());
-            jTxTFNombre.setText(a.getNombre());
-            jTxTFFechaNac.setText("");
-            jTxTFFechaNac.setText(a.getFechaNacimiento().toString());
+        if (jTxTFBuscarAlumno.getText().equals("")) {
+            JOptionPane.showMessageDialog(null, "Ingrese un legajo", "Error", JOptionPane.ERROR_MESSAGE);
         } else {
-            JOptionPane.showMessageDialog(null, "No se ha encontrado al alumno", "Error", JOptionPane.ERROR_MESSAGE);
+            Alumno a = aData.buscarAlumno(Integer.parseInt(jTxTFBuscarAlumno.getText()));
+            if (a != null) {
+                jTxTFDNI.setText(String.valueOf(a.getDni()));
+                jTxTFApellido.setText(a.getApellido());
+                jTxTFNombre.setText(a.getNombre());
+                jTxTFFechaNac.setText("");
+                jTxTFFechaNac.setText(a.getFechaNacimiento().toString());
+            } else {
+                JOptionPane.showMessageDialog(null, "No se ha encontrado al alumno", "Error", JOptionPane.ERROR_MESSAGE);
+            }
         }
-
     }//GEN-LAST:event_jButtBuscarActionPerformed
 
     private void jButtActualizarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtActualizarActionPerformed
